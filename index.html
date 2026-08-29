@@ -535,7 +535,7 @@ const data = {
 
   fixtures: [
     {
-      date: "2026-08-24",
+      date: "2026-08-23",
       homeAway: "Away",
       opponent: "Long Stratton",
       venue: "Great Moulton",
@@ -575,7 +575,7 @@ const data = {
 
   matches: [
     {
-      date: "2026-08-24",
+      date: "2026-08-23",
       homeAway: "Away",
       opponent: "Long Stratton",
       type: "Friendly",
@@ -600,8 +600,12 @@ const data = {
         motm: "Arthur Bentley",
         cleanSheet: null
       },
-      result: "L"
-    }
+      result: "L",
+      score: {
+       for: 0,
+       against: 6
+     }
+}
   ]
 };
 
@@ -964,24 +968,6 @@ function renderSeasonSummary() {
     <p><strong>Total Assists:</strong> ${totalAssists}</p>
     <p><strong>Record:</strong> ${wins}W ${draws}D ${losses}L</p>
   `;
-}
-
-/* --- ADDED: updateSeasonStats() --- */
-function updateSeasonStats() {
-  let totalGF = 0;
-  let totalGA = 0;
-
-  data.matches.forEach(match => {
-    if (match.score && typeof match.score.for === 'number' && typeof match.score.against === 'number') {
-      totalGF += match.score.for;
-      totalGA += match.score.against;
-    }
-  });
-
-  const gfEl = document.getElementById("goals-for");
-  const gaEl = document.getElementById("goals-against");
-  if (gfEl) gfEl.textContent = totalGF;
-  if (gaEl) gaEl.textContent = totalGA;
 }
 
 /* APPEARANCE BREAKDOWN */
