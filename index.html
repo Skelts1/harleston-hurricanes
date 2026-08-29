@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Harleston U13 Hurricanes Dashboard</title>
+
+<style>
+:root {
+  --primary: #000000;
+  --secondary: #ffffff;
+  --background: #f2f2f2;
+  --card-bg: #ffffff;
+  --border: #dddddd;
+  --muted: #666666;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background: var(--background);
+  color: #111111;
+  line-height: 1.5;
+}
+
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header {
+  background: var(--primary);
+  color: var(--secondary);
+  padding: 16px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.header-title {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.header-title h1 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.header-title span {
+  font-size: 12px;
+  color: #e0e0e0;
+}
+
+/* Tab Bar */
+.tab-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.tab {
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: 500;
+  user-select: none;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.4);
+  background: transparent;
+  color: #ffffff;
+  font-size: 13px;
+  transition: background 0.15s ease, color 0.15s ease, opacity 0.15s ease;
+  opacity: 0.85;
+}
+
+.tab:hover {
+  background: rgba(255,255,255,0.15);
+  opacity: 1;
+}
+
+.tab.active {
+  background: #ffffff;
+  color: var(--primary);
+  opacity: 1;
+}
+
+/* Layout */
+main {
+  flex: 1;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Sections */
+.section {
+  display: none;
+}
+
+.section.active {
+  display: block;
+}
+
+.section-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 18px 18px 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  border: 1px solid var(--border);
+  margin-bottom: 16px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.section-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.section-card h2 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.section-subtitle {
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+/* Info boxes on Home */
+.info-box {
+  padding: 12px 14px;
+  background: #ffffff;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  margin-top: 10px;
+}
+
+.info-box h3 {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+/* Lists */
+#squad {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 8px;
+}
+
+#squad li {
+  padding: 6px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 13px;
+}
+
+/* Fixtures */
+.match {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.match:hover {
+  background: #f7f7f7;
+}
+
+/* Player Stats Cards */
+.player-card {
+  padding: 10px;
+  margin-bottom: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 13px;
+  background: #fafafa;
+}
+
+/* Heatmap Boxes */
+.heatmap-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.heat-box {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  color: #ffffff;
+  font-weight: bold;
+  text-align: center;
+  font-size: 12px;
+  padding: 6px;
+}
+
+.heat-box small {
+  font-size: 11px;
+  color: #f0f0f0;
+}
+
+/* Table wrapper */
+.table-wrapper {
+  margin-top: 8px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  min-width: 400px;
+}
+
+thead {
+  background: #f0f0f0;
+}
+
+th, td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid #e5e5e5;
+  white-space: nowrap;
+}
+
+th {
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+tbody tr:nth-child(even) {
+  background: #fafafa;
+}
+
+tbody tr:hover {
+  background: #f0f0f0;
+}
+
+/* Comparison */
+#compareA, #compareB {
+  margin: 4px 4px 8px 0;
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  font-size: 13px;
+}
+
+#comparisonResult {
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+button {
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 13px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+button:hover {
+  background: #333333;
+}
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--border);
+  background: #f0f0f0;
+  margin-top: 20px;
+}
+
+.footer-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 10px 20px 14px;
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 600px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+  }
+}
+</style>
+</head>
+
+<body>
+<div class="app-shell">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-inner">
+      <div class="header-title">
+        <h1>Harleston U13 Hurricanes Dashboard</h1>
+        <span>Season tracker • Black & white club theme</span>
+      </div>
+
+      <div class="tab-container">
+        <button class="tab active" data-tab="homeTab">Home</button>
+        <button class="tab" data-tab="squadTab">Squad</button>
+        <button class="tab" data-tab="fixturesTab">Fixtures</button>
+        <button class="tab" data-tab="statsTab">Player Stats</button>
+        <button class="tab" data-tab="heatmapTab">Appearance Heatmap</button>
+        <button class="tab" data-tab="leaderboardTab">Top Scorers</button>
+        <button class="tab" data-tab="compareTab">Compare Players</button>
+        <button class="tab" data-tab="summaryTab">Season Summary</button>
+        <button class="tab" data-tab="timelineTab">Match Timeline</button>
+        <button class="tab" data-tab="appearanceTab">Appearances</button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="container">
+
+      <!-- HOME TAB -->
+      <div id="homeTab" class="section active">
+        <div class="section-card">
+          <h2>Welcome</h2>
+          <p class="section-subtitle">
+            This dashboard tracks the full Harleston U13 Hurricanes season across fixtures, stats and appearances.
+          </p>
+
+          <div id="nextMatchBox" class="info-box">Loading next match…</div>
+          <div id="lastMatchBox" class="info-box">Loading last match…</div>
+          <div id="seasonProgress" class="info-box">Loading season progress…</div>
+          <div id="formGraph" class="info-box">Loading form graph…</div>
+        </div>
+      </div>
+
+      <!-- SQUAD TAB -->
+      <div id="squadTab" class="section">
+        <div class="section-card">
+          <h2>Squad List</h2>
+          <p class="section-subtitle">Registered players, staff and positions.</p>
+
+          <div style="margin-bottom:15px; padding:10px; border:1px solid #ddd; border-radius:8px; background:#fafafa;">
+            <strong>Manager:</strong> Steve Goddard<br>
+            <strong>Assistant Manager:</strong> Mark Eldren
+          </div>
+
+          <ul id="squad"></ul>
+        </div>
+      </div>
+
+      <!-- FIXTURES TAB -->
+      <div id="fixturesTab" class="section">
+        <div class="section-card">
+          <h2>Fixtures</h2>
+          <p class="section-subtitle">Upcoming and scheduled matches.</p>
+          <div id="fixtures"></div>
+        </div>
+      </div>
+
+      <!-- PLAYER STATS TAB -->
+      <div id="statsTab" class="section">
+        <div class="section-card">
+          <h2>Player Stats</h2>
+          <p class="section-subtitle">Goals, assists, MOTM and clean sheets per player.</p>
+          <div id="playerStats"></div>
+        </div>
+      </div>
+
+      <!-- HEATMAP TAB -->
+      <div id="heatmapTab" class="section">
+        <div class="section-card">
+          <h2>Appearance Heatmap</h2>
+          <p class="section-subtitle">Visual intensity of appearances across the squad.</p>
+          <div id="appearanceHeatmap" class="heatmap-wrapper"></div>
+        </div>
+      </div>
+
+      <!-- GOAL LEADERBOARD TAB -->
+      <div id="leaderboardTab" class="section">
+        <div class="section-card">
+          <h2>Top Scorers</h2>
+          <p class="section-subtitle">Ranked by total goals.</p>
+          <div id="goalLeaderboard"></div>
+        </div>
+      </div>
+
+      <!-- PLAYER COMPARISON TAB -->
+      <div id="compareTab" class="section">
+        <div class="section-card">
+          <h2>Player Comparison</h2>
+          <p class="section-subtitle">Compare two players across key metrics.</p>
+          <select id="compareA"></select>
+          <select id="compareB"></select>
+          <br>
+          <button onclick="renderComparison()">Compare</button>
+          <div id="comparisonResult"></div>
+        </div>
+      </div>
+
+      <!-- SEASON SUMMARY TAB -->
+      <div id="summaryTab" class="section">
+        <div class="section-card">
+          <h2>Season Summary</h2>
+          <p class="section-subtitle">High‑level view of goals, assists and record.</p>
+          <div id="seasonSummary"></div>
+        </div>
+      </div>
+
+      <!-- MATCH TIMELINE TAB -->
+      <div id="timelineTab" class="section">
+        <div class="section-card">
+          <h2>Match Timeline</h2>
+          <p class="section-subtitle">Chronological view of match events.</p>
+          <div id="matchTimeline"></div>
+        </div>
+      </div>
+
+      <!-- APPEARANCES TAB -->
+      <div id="appearanceTab" class="section">
+        <div class="section-card">
+          <h2>Player Appearance Breakdown</h2>
+          <p class="section-subtitle">Friendlies, League and Cup appearances per player.</p>
+
+          <div class="table-wrapper">
+            <div class="table-scroll">
+              <table id="appearanceMatrix">
+                <thead>
+                  <tr>
+                    <th>Player</th>
+                    <th>Friendlies</th>
+                    <th>League</th>
+                    <th>Cup</th>
+                    <th>Total</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <span>Harleston U13 Hurricanes • Season 2024/25</span>
+      <span>Dashboard updates as fixtures and stats are recorded</span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+/* DATA MODEL */
+const data = {
+  squad: [
+    { name: "Theo Goddard", position: "Goalkeeper" },
+    { name: "Beck Brennan", position: "Defender" },
+    { name: "Ben Tawn", position: "Defender" },
+    { name: "Oscar Broadley", position: "Defender" },
+    { name: "Jenson Bartrum", position: "Defender" },
+    { name: "Jack Renaut", position: "Defender/Midfielder" },
+    { name: "Arthur Bentley", position: "Midfielder" },
+    { name: "Joey Coles", position: "Midfielder" },
+    { name: "Dexter Elden", position: "Midfielder" },
+    { name: "Jesse Skelton", position: "Midfielder" },
+    { name: "Elias Young", position: "Striker" },
+    { name: "Jacob Saunders", position: "Striker" }
+  ],
+
+  fixtures: [
+    {
+      date: "2026-08-24",
+      homeAway: "Away",
+      opponent: "Long Stratton",
+      venue: "Great Moulton",
+      kickoff: "10:30am",
+      type: "Friendly"
+    },
+    {
+      date: "2026-08-30",
+      homeAway: "Home",
+      opponent: "Heigham Park Rangers",
+      venue: "Harleston Sancroft Academy",
+      kickoff: "10:30am",
+      type: "Friendly"
+    },
+    { date: "2026-09-06", homeAway: "Home", opponent: "Mulbarton Wanderers F.C. U13 Pumas", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
+    { date: "2026-09-13", homeAway: "Home", opponent: "Morley Youth F.C. U13 Mustangs", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
+    { date: "2026-09-20", homeAway: "Away", opponent: "Holt United F.C. U13", venue: "Holt Playing Fields", kickoff: "TBC", type: "League" },
+    { date: "2026-09-27", homeAway: "Away", opponent: "Cringleford F.C. U13 Lightning", venue: "Eaton Park", kickoff: "TBC", type: "League" },
+    { date: "2026-10-11", homeAway: "Home", opponent: "Heigham Park Rangers F.C. U13 Heroes", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
+    { date: "2026-10-18", homeAway: "Away", opponent: "Stoke United F.C. U13 Blues", venue: "Framingham Earl Sports Centre", kickoff: "TBC", type: "League" },
+    { date: "2026-10-25", homeAway: "Away", opponent: "Sprowston F.C. U13 Hawks", venue: "Sprowston Cricket Club", kickoff: "TBC", type: "League" },
+    { date: "2026-11-01", homeAway: "Away", opponent: "Old Catton Juniors F.C. U13 Cobras", venue: "Lavare Park", kickoff: "TBC", type: "League" },
+    { date: "2026-11-08", homeAway: "Home", opponent: "Cringleford F.C. U13 Lightning", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
+    { date: "2026-11-15", homeAway: "Home", opponent: "Aylsham F.C. U13 Rhinos", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
+    { date: "2026-12-06", homeAway: "Away", opponent: "North Walsham Town F.C. U13 Angels", venue: "Greens Road", kickoff: "TBC", type: "League" },
+    { date: "2026-12-13", homeAway: "Away", opponent: "Morley Youth F.C. U13 Mustangs", venue: "Shropham Playing Field", kickoff: "TBC", type: "League" },
+    { date: "2026-12-20", homeAway: "Home", opponent: "Sprowston F.C. U13 Hawks", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
+    { date: "2027-01-10", homeAway: "Home", opponent: "Holt United F.C. U13", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
+    { date: "2027-01-17", homeAway: "Away", opponent: "Heigham Park Rangers F.C. U13 Heroes", venue: "Recreation Road Sports Centre", kickoff: "TBC", type: "League" },
+    { date: "2027-01-24", homeAway: "Away", opponent: "Clenchwarton F.C. U13 Orange", venue: "Clenchwarton Recreation Ground", kickoff: "TBC", type: "League" },
+    { date: "2027-01-31", homeAway: "Away", opponent: "Aylsham F.C. U13 Rhinos", venue: "Youngs Park", kickoff: "TBC", type: "League" },
+    { date: "2027-02-07", homeAway: "Away", opponent: "Mulbarton Wanderers F.C. U13 Pumas", venue: "Orchard Park", kickoff: "TBC", type: "League" },
+    { date: "2027-02-14", homeAway: "Home", opponent: "Stoke United F.C. U13 Blues", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
+    { date: "2027-02-21", homeAway: "Home", opponent: "North Walsham Town F.C. U13 Angels", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
+    { date: "2027-02-28", homeAway: "Home", opponent: "Clenchwarton F.C. U13 Orange", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" }
+  ],
+
+  matches: [
+    {
+      date: "2026-08-24",
+      homeAway: "Away",
+      opponent: "Long Stratton",
+      type: "Friendly",
+      startingXI: [
+        "Theo Goddard",
+        "Ben Tawn",
+        "Oscar Broadley",
+        "Jenson Bartrum",
+        "Joey Coles",
+        "Dexter Elden",
+        "Jesse Skelton",
+        "Elias Young",
+        "Jacob Saunders"
+      ],
+      subs: [
+        "Jack Renaut",
+        "Arthur Bentley"
+      ],
+      events: {
+        goals: [],
+        assists: [],
+        motm: "Arthur Bentley",
+        cleanSheet: null
+      },
+      result: "L"
+    }
+  ]
+};
+
+/* DATE FORMATTER */
+function formatDateFull(dateStr) {
+  const weekdays = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const months = [
+    "January","February","March","April","May","June",
+    "July","August","September","October","November","December"
+  ];
+  const d = new Date(dateStr);
+  return `${weekdays[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+/* TABS */
+function setupTabs() {
+  const tabs = document.querySelectorAll('.tab');
+  const sections = document.querySelectorAll('.section');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetId = tab.getAttribute('data-tab');
+      tabs.forEach(t => t.classList.remove('active'));
+      sections.forEach(s => s.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(targetId).classList.add('active');
+    });
+  });
+}
+
+/* SQUAD */
+function renderSquad() {
+  const squadEl = document.getElementById("squad");
+  squadEl.innerHTML = "";
+  data.squad.forEach(player => {
+    const li = document.createElement("li");
+    li.textContent = `${player.name} (${player.position})`;
+    squadEl.appendChild(li);
+  });
+}
+
+/* FIXTURES */
+function renderFixtures() {
+  const fixturesEl = document.getElementById("fixtures");
+  fixturesEl.innerHTML = "";
+
+  data.fixtures.forEach(match => {
+    const matchDiv = document.createElement("div");
+    matchDiv.className = "match";
+    matchDiv.innerHTML = `
+      <strong>${formatDateFull(match.date)}</strong><br>
+      ${match.homeAway} vs ${match.opponent}<br>
+      <small>${match.venue}</small><br>
+      <small><strong>Kickoff:</strong> ${match.kickoff}</small>
+    `;
+    fixturesEl.appendChild(matchDiv);
+  });
+}
+
+/* NEXT MATCH */
+function getNextMatch() {
+  const today = new Date();
+  return data.fixtures
+    .map(f => ({ ...f, dateObj: new Date(f.date) }))
+    .filter(f => f.dateObj >= today)
+    .sort((a, b) => a.dateObj - b.dateObj)[0] || null;
+}
+
+function renderNextMatch() {
+  const box = document.getElementById("nextMatchBox");
+  const next = getNextMatch();
+  if (!next) {
+    box.innerHTML = "<strong>No upcoming matches.</strong>";
+    return;
+  }
+
+  const matchDate = next.dateObj;
+  const now = new Date();
+  const diffMs = matchDate - now;
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const diffHours = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
+  const diffMinutes = Math.floor((diffMs / (1000 * 60)) % 60);
+
+  box.innerHTML = `
+    <h3>Next Match</h3>
+    <p><strong>${formatDateFull(next.date)}</strong></p>
+    <p>${next.homeAway} vs ${next.opponent}</p>
+    <p><small>${next.venue}</small></p>
+    <p><strong>Kickoff:</strong> ${next.kickoff}</p>
+    <p><strong>Countdown:</strong><br>
+    ${diffDays} days, ${diffHours} hours, ${diffMinutes} minutes</p>
+  `;
+}
+
+/* LAST MATCH */
+function getLastMatch() {
+  const today = new Date();
+  return data.matches
+    .map(m => ({ ...m, dateObj: new Date(m.date) }))
+    .filter(m => m.dateObj < today)
+    .sort((a, b) => b.dateObj - a.dateObj)[0] || null;
+}
+
+function renderLastMatch() {
+  const box = document.getElementById("lastMatchBox");
+  const last = getLastMatch();
+  if (!last) {
+    box.innerHTML = "<strong>No matches played yet.</strong>";
+    return;
+  }
+
+  const resultIcon =
+    last.result === "W" ? "🟩 Win" :
+    last.result === "D" ? "🟨 Draw" :
+    "🟥 Loss";
+
+  const goals = last.events.goals
+    .map(g => `${g.player} ${"⚽".repeat(g.count)}`)
+    .join(", ");
+
+  const assists = last.events.assists
+    .map(a => `${a.player} 🎯`)
+    .join(", ");
+
+  box.innerHTML = `
+    <h3>Last Match</h3>
+    <p><strong>${formatDateFull(last.date)}</strong></p>
+    <p>${last.homeAway} vs ${last.opponent}</p>
+    <p><strong>Result:</strong> ${resultIcon}</p>
+    <p><strong>MOTM:</strong> ${last.events.motm}</p>
+    <p><strong>Goals:</strong> ${goals || "None"}</p>
+    <p><strong>Assists:</strong> ${assists || "None"}</p>
+  `;
+}
+
+/* SEASON PROGRESS */
+function renderSeasonProgress() {
+  const bar = document.getElementById("seasonProgress");
+  const total = data.fixtures.length;
+  const played = data.matches.length;
+  const pct = total === 0 ? 0 : Math.round((played / total) * 100);
+
+  bar.innerHTML = `
+    <h3>Season Progress</h3>
+    <div style="width:100%; background:#ddd; height:20px; border-radius:10px;">
+      <div style="
+        width:${pct}%;
+        height:20px;
+        background:black;
+        border-radius:10px;
+      "></div>
+    </div>
+    <p>${played} of ${total} matches played (${pct}%)</p>
+  `;
+}
+
+/* FORM GRAPH */
+function renderFormGraph() {
+  const box = document.getElementById("formGraph");
+  if (data.matches.length === 0) {
+    box.innerHTML = "<strong>No form data yet.</strong>";
+    return;
+  }
+
+  const formIcons = data.matches.map(m =>
+    m.result === "W" ? "🟩" :
+    m.result === "D" ? "🟨" :
+    "🟥"
+  );
+
+  box.innerHTML = `
+    <h3>Form Graph</h3>
+    <p style="font-size:24px;">${formIcons.join(" ")}</p>
+  `;
+}
+
+/* PLAYER STATS */
+function calculatePlayerStats() {
+  const stats = {};
+  data.squad.forEach(p => {
+    stats[p.name] = { goals: 0, assists: 0, motm: 0, cleanSheets: 0 };
+  });
+
+  data.matches.forEach(match => {
+    match.events.goals.forEach(g => stats[g.player].goals += g.count);
+    match.events.assists.forEach(a => stats[a.player].assists += 1);
+    if (match.events.motm) stats[match.events.motm].motm += 1;
+    if (match.events.cleanSheet) stats[match.events.cleanSheet].cleanSheets += 1;
+  });
+
+  return stats;
+}
+
+function renderPlayerStats() {
+  const stats = calculatePlayerStats();
+  const container = document.getElementById("playerStats");
+  container.innerHTML = "";
+
+  Object.keys(stats).forEach(player => {
+    const div = document.createElement("div");
+    div.className = "player-card";
+    div.innerHTML = `
+      <strong>${player}</strong><br>
+      Goals: ${stats[player].goals} ${stats[player].goals > 0 ? "⚽".repeat(stats[player].goals) : ""}<br>
+      Assists: ${stats[player].assists} ${stats[player].assists > 0 ? "🎯".repeat(stats[player].assists) : ""}<br>
+      MOTM: ${stats[player].motm}<br>
+      Clean Sheets: ${stats[player].cleanSheets}
+    `;
+    container.appendChild(div);
+  });
+}
+
+/* APPEARANCE HEATMAP */
+function calculateAppearances() {
+  const apps = {};
+  data.squad.forEach(p => apps[p.name] = 0);
+
+  data.matches.forEach(match => {
+    match.startingXI.forEach(player => apps[player]++);
+    if (match.subs) match.subs.forEach(player => apps[player]++);
+  });
+
+  return apps;
+}
+
+function renderAppearanceHeatmap() {
+  const container = document.getElementById("appearanceHeatmap");
+  container.innerHTML = "";
+
+  const apps = calculateAppearances();
+  const maxApps = Math.max(0, ...Object.values(apps));
+
+  Object.keys(apps).forEach(player => {
+    const intensity = apps[player] === 0 || maxApps === 0
+      ? "#999"
+      : `rgba(0, 0, 0, ${apps[player] / maxApps})`;
+
+    const box = document.createElement("div");
+    box.className = "heat-box";
+    box.style.background = intensity;
+    box.innerHTML = `${player}<br><small>${apps[player]} apps</small>`;
+    container.appendChild(box);
+  });
+}
+
+/* GOAL LEADERBOARD */
+function renderGoalLeaderboard() {
+  const stats = calculatePlayerStats();
+  const container = document.getElementById("goalLeaderboard");
+  container.innerHTML = "";
+
+  const sorted = Object.entries(stats)
+    .sort((a, b) => b[1].goals - a[1].goals)
+    .filter(([_, s]) => s.goals > 0);
+
+  sorted.forEach(([player, s], index) => {
+    const row = document.createElement("div");
+    row.innerHTML = `<strong>${index + 1}. ${player}</strong> — ${s.goals} ⚽`;
+    container.appendChild(row);
+  });
+
+  if (sorted.length === 0) {
+    container.innerHTML = "<p>No goals recorded yet.</p>";
+  }
+}
+
+/* PLAYER COMPARISON */
+function populateComparisonDropdowns() {
+  const a = document.getElementById("compareA");
+  const b = document.getElementById("compareB");
+  data.squad.forEach(p => {
+    const optA = document.createElement("option");
+    optA.value = p.name;
+    optA.textContent = p.name;
+    const optB = document.createElement("option");
+    optB.value = p.name;
+    optB.textContent = p.name;
+    a.appendChild(optA);
+    b.appendChild(optB);
+  });
+}
+
+function renderComparison() {
+  const pA = document.getElementById("compareA").value;
+  const pB = document.getElementById("compareB").value;
+
+  if (pA === pB) {
+    document.getElementById("comparisonResult").innerHTML =
+      "<p>Please select two different players.</p>";
+    return;
+  }
+
+  const stats = calculatePlayerStats();
+  const a = stats[pA];
+  const b = stats[pB];
+
+  document.getElementById("comparisonResult").innerHTML = `
+    <h3>${pA} vs ${pB}</h3>
+    <p><strong>Goals:</strong> ${a.goals} ⚽ vs ${b.goals} ⚽</p>
+    <p><strong>Assists:</strong> ${a.assists} 🎯 vs ${b.assists} 🎯</p>
+    <p><strong>MOTM:</strong> ${a.motm} vs ${b.motm}</p>
+    <p><strong>Clean Sheets:</strong> ${a.cleanSheets} vs ${b.cleanSheets}</p>
+  `;
+}
+
+/* MATCH TIMELINE */
+function renderMatchTimeline() {
+  const container = document.getElementById("matchTimeline");
+  container.innerHTML = "";
+
+  if (data.matches.length === 0) {
+    container.innerHTML = "<p>No match events yet.</p>";
+    return;
+  }
+
+  data.matches.forEach(match => {
+    const div = document.createElement("div");
+    div.style.marginBottom = "16px";
+
+    const goals = match.events.goals
+      .map(g => `${g.player} ${"⚽".repeat(g.count)}`)
+      .join(", ");
+
+    const assists = match.events.assists
+      .map(a => `${a.player} 🎯`)
+      .join(", ");
+
+    div.innerHTML = `
+      <strong>${formatDateFull(match.date)}</strong><br>
+      ${match.homeAway} vs ${match.opponent}<br>
+      <strong>Result:</strong> ${match.result}<br>
+      <strong>MOTM:</strong> ${match.events.motm}<br>
+      <strong>Goals:</strong> ${goals || "None"}<br>
+      <strong>Assists:</strong> ${assists || "None"}
+    `;
+    container.appendChild(div);
+  });
+}
+
+/* SEASON SUMMARY */
+function renderSeasonSummary() {
+  const container = document.getElementById("seasonSummary");
+  if (data.matches.length === 0) {
+    container.innerHTML = "<p>No matches played yet.</p>";
+    return;
+  }
+
+  const stats = calculatePlayerStats();
+  const totalGoals = Object.values(stats)
+    .reduce((sum, p) => sum + p.goals, 0);
+  const totalAssists = Object.values(stats)
+    .reduce((sum, p) => sum + p.assists, 0);
+  const wins = data.matches.filter(m => m.result === "W").length;
+  const draws = data.matches.filter(m => m.result === "D").length;
+  const losses = data.matches.filter(m => m.result === "L").length;
+
+  container.innerHTML = `
+    <h3>Season Summary</h3>
+    <p><strong>Total Goals:</strong> ${totalGoals}</p>
+    <p><strong>Total Assists:</strong> ${totalAssists}</p>
+    <p><strong>Record:</strong> ${wins}W ${draws}D ${losses}L</p>
+  `;
+}
+
+/* APPEARANCE BREAKDOWN */
+function renderAppearanceBreakdown() {
+  const tbody = document.querySelector("#appearanceMatrix tbody");
+  tbody.innerHTML = "";
+
+  data.squad.forEach(player => {
+    const name = player.name;
+    let friendlies = 0;
+    let league = 0;
+    let cup = 0;
+
+    data.matches.forEach(match => {
+      const played =
+        match.startingXI.includes(name) ||
+        (match.subs && match.subs.includes(name));
+
+      if (played) {
+        if (match.type === "Friendly") friendlies++;
+        else if (match.type === "League") league++;
+        else if (match.type === "Cup") cup++;
+      }
+    });
+
+    const total = friendlies + league + cup;
+
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td><strong>${name}</strong></td>
+      <td>${friendlies}</td>
+      <td>${league}</td>
+      <td>${cup}</td>
+      <td>${total}</td>
+    `;
+    tbody.appendChild(row);
+  });
+}
+
+/* INIT */
+function init() {
+  setupTabs();
+  renderSquad();
+  renderFixtures();
+  renderNextMatch();
+  renderLastMatch();
+  renderSeasonProgress();
+  renderFormGraph();
+  renderPlayerStats();
+  renderAppearanceHeatmap();
+  renderGoalLeaderboard();
+  populateComparisonDropdowns();
+  renderSeasonSummary();
+  renderMatchTimeline();
+  renderAppearanceBreakdown();
+}
+
+init();
+</script>
+</body>
+</html>
+
+
