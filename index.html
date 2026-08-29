@@ -1021,6 +1021,24 @@ function renderAppearanceBreakdown() {
   });
 }
 
+  
+function updateSeasonStats() {
+  let totalGF = 0;
+  let totalGA = 0;
+
+  data.matches.forEach(match => {
+    if (match.score) {
+      totalGF += match.score.for;
+      totalGA += match.score.against;
+    }
+  });
+
+  document.getElementById("goals-for").textContent = totalGF;
+  document.getElementById("goals-against").textContent = totalGA;
+}
+
+updateSeasonStats();
+
 /* INIT */
 function init() {
   setupTabs();
