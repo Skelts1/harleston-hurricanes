@@ -508,7 +508,7 @@ footer {
 
   <footer>
     <div class="footer-inner">
-      <span>Harleston U13 Hurricanes • Season 2024/25</span>
+      <span>Harleston U13 Hurricanes • Season 2026/27</span>
       <span>Dashboard updates as fixtures and stats are recorded</span>
     </div>
   </footer>
@@ -646,7 +646,7 @@ matches: [
     }
   }
 ],
-
+};
 
 /* DATE FORMATTER */
 function formatDateFull(dateStr) {
@@ -655,7 +655,7 @@ function formatDateFull(dateStr) {
     "January","February","March","April","May","June",
     "July","August","September","October","November","December"
   ];
-  const d = new Date(dateStr);
+  const d = new Date(`${dateStr}T00:00:00`);
   return `${weekdays[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
 }
 
@@ -708,7 +708,7 @@ function renderFixtures() {
 function getNextMatch() {
   const today = new Date();
   return data.fixtures
-    .map(f => ({ ...f, dateObj: new Date(f.date) }))
+    .map(f => ({ ...f, dateObj: new Date(`${f.date}T00:00:00`) }))
     .filter(f => f.dateObj >= today)
     .sort((a, b) => a.dateObj - b.dateObj)[0] || null;
 }
@@ -735,7 +735,7 @@ function renderNextMatch() {
     <p><small>${next.venue}</small></p>
     <p><strong>Kickoff:</strong> ${next.kickoff}</p>
     <p><strong>Countdown:</strong><br>
-    ${diffDays} days, ${diffHours} hours, ${diffMinutes} minutes</p>
+    ${Math.max(0, diffDays)} days, ${Math.max(0, diffHours)} hours, ${Math.max(0, diffMinutes)} minutes</p>
   `;
 }
 
@@ -743,7 +743,7 @@ function renderNextMatch() {
 function getLastMatch() {
   const today = new Date();
   return data.matches
-    .map(m => ({ ...m, dateObj: new Date(m.date) }))
+    .map(m => ({ ...m, dateObj: new Date(`${m.date}T00:00:00`) }))
     .filter(m => m.dateObj < today)
     .sort((a, b) => b.dateObj - a.dateObj)[0] || null;
 }
@@ -773,7 +773,7 @@ function renderLastMatch() {
     <h3>Last Match</h3>
     <p><strong>${formatDateFull(last.date)}</strong></p>
     <p>${last.homeAway} vs ${last.opponent}</p>
-    <p><strong>Result:</strong> ${resultIcon}</p>
+    <p><strong>Result:</strong> ${resultIcon} (${last.score.for}-${last.score.against})</p>
     <p><strong>MOTM:</strong> ${last.events.motm}</p>
     <p><strong>Goals:</strong> ${goals || "None"}</p>
     <p><strong>Assists:</strong> ${assists || "None"}</p>
@@ -829,10 +829,10 @@ function calculatePlayerStats() {
   });
 
   data.matches.forEach(match => {
-    match.events.goals.forEach(g => stats[g.player].goals += g.count);
-    match.events.assists.forEach(a => stats[a.player].assists += 1);
-    if (match.events.motm) stats[match.events.motm].motm += 1;
-    if (match.events.cleanSheet) stats[match.events.cleanSheet].cleanSheets += 1;
+    match.events.goals.forEach(g => { if (stats[g.player]) stats[g.player].goals += g.count; });
+    match.events.assists.forEach(a => { if (stats[a.player]) stats[a.player].assists += 1; });
+    if (match.events.motm && stats[match.events.motm]) stats[match.events.motm].motm += 1;
+    if (match.events.cleanSheet && stats[match.events.cleanSheet]) stats[match.events.cleanSheet].cleanSheets += 1;
   });
 
   return stats;
@@ -915,6 +915,7 @@ function renderGoalLeaderboard() {
 function populateComparisonDropdowns() {
   const a = document.getElementById("compareA");
   const b = document.getElementById("compareB");
+  a.innerHTML = ""; b.innerHTML = "";
   data.squad.forEach(p => {
     const optA = document.createElement("option");
     optA.value = p.name;
@@ -975,7 +976,7 @@ function renderMatchTimeline() {
     div.innerHTML = `
       <strong>${formatDateFull(match.date)}</strong><br>
       ${match.homeAway} vs ${match.opponent}<br>
-      <strong>Result:</strong> ${match.result}<br>
+      <strong>Result:</strong> ${match.result} (${match.score.for}-${match.score.against})<br>
       <strong>MOTM:</strong> ${match.events.motm}<br>
       <strong>Goals:</strong> ${goals || "None"}<br>
       <strong>Assists:</strong> ${assists || "None"}
@@ -1062,7 +1063,7 @@ function updateSeasonStats() {
   document.getElementById("goals-against").textContent = totalGA;
 }
 
-updateSeasonStats();
+/* INIT */
 
 /* INIT */
 function init() {
@@ -1090,3 +1091,4 @@ document.addEventListener('DOMContentLoaded', init);
 
 </body>
 </html>
+
