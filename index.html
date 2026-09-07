@@ -132,8 +132,7 @@ main {
   margin-top: 8px;
 }
 
-.heat-box { min-width: 140px; min-height: 112px; flex: 1 1 160px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; border-radius: var(--radius-md); color: #FFFFFF; font-weight: 700; text-align: left; font-size: 13px; padding: 16px; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.16), var(--shadow-sm); }
-.heat-box { color: #101828; border: 1px solid rgba(16,24,40,0.18); }
+.heat-box { min-width: 140px; min-height: 112px; flex: 1 1 160px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; border-radius: var(--radius-md); color: #101828; font-weight: 700; text-align: left; font-size: 13px; padding: 16px; border: 1px solid rgba(16,24,40,0.18); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.16), var(--shadow-sm); }
 
 .heat-box small { font-size: 11px; color: #101828; font-weight: 600; }
 .heatmap-legend { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 12px 0 10px; font-size: 12px; color: var(--muted); }
@@ -196,6 +195,35 @@ tbody tr:hover {
 .comparison-card { border: 1px solid var(--border); border-radius: var(--radius-md); background: linear-gradient(180deg, #FFFFFF 0%, #FCFCFD 100%); padding: 16px; box-shadow: var(--shadow-sm); }
 .comparison-card h3 { margin-bottom: 10px; font-size: 16px; color: var(--text); }
 .comparison-stat { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-top: 1px solid #EAECF0; }
+.summary-hero { margin-top: 16px; padding: 20px; border-radius: var(--radius-lg); background: linear-gradient(135deg, #101828 0%, #342A68 100%); color: #FFFFFF; box-shadow: 0 16px 40px rgba(16,24,40,0.18); }
+.summary-hero h3 { margin: 0 0 8px; font-size: 15px; font-weight: 700; color: #FFFFFF; }
+.summary-record { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; font-size: 36px; font-weight: 800; letter-spacing: -0.04em; }
+.summary-record span { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.72); }
+.summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-top: 14px; }
+.summary-card { position: relative; overflow: hidden; padding: 16px; border-radius: var(--radius-md); background: linear-gradient(180deg, #FFFFFF 0%, #FCFCFD 100%); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.summary-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: linear-gradient(90deg, var(--accent), var(--accent-bright)); }
+.summary-label { display: block; color: var(--muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+.summary-value { display: block; margin-top: 6px; font-size: 28px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
+.summary-note { margin-top: 8px; color: var(--muted); font-size: 12px; }
+.leaderboard-list { display: grid; gap: 12px; margin-top: 16px; }
+.leaderboard-card { position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; padding: 16px; border-radius: var(--radius-md); border: 1px solid rgba(124,92,252,0.16); background: linear-gradient(135deg, #FFFFFF 0%, #F8F7FF 100%); box-shadow: 0 10px 28px rgba(16,24,40,0.08); }
+.leaderboard-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: linear-gradient(180deg, var(--accent), var(--accent-bright)); }
+.leaderboard-rank { width: 38px; height: 38px; border-radius: 14px; display: grid; place-items: center; font-weight: 800; color: #FFFFFF; background: linear-gradient(135deg, var(--primary), var(--accent)); box-shadow: 0 8px 18px rgba(124,92,252,0.28); }
+.leaderboard-player strong { display: block; font-size: 15px; letter-spacing: -0.01em; color: var(--text); }
+.leaderboard-player span { display: block; margin-top: 2px; font-size: 12px; color: var(--muted); }
+.leaderboard-goals { text-align: right; font-weight: 800; color: var(--accent); font-size: 22px; line-height: 1; }
+.leaderboard-goals span { display: block; margin-top: 4px; font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.leaderboard-progress { grid-column: 2 / 4; height: 8px; border-radius: 999px; background: #EAECF0; overflow: hidden; }
+.leaderboard-progress span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), var(--accent-bright)); }
+.leaderboard-card.rank-1 { border-color: rgba(245,158,11,0.38); background: linear-gradient(135deg, #FFFBEB 0%, #FFFFFF 48%, #FFF7ED 100%); box-shadow: 0 18px 40px rgba(245,158,11,0.18); }
+.leaderboard-card.rank-2 { border-color: rgba(148,163,184,0.45); background: linear-gradient(135deg, #F8FAFC 0%, #FFFFFF 50%, #EEF2F6 100%); box-shadow: 0 16px 34px rgba(100,116,139,0.14); }
+.leaderboard-card.rank-3 { border-color: rgba(180,83,9,0.34); background: linear-gradient(135deg, #FFF7ED 0%, #FFFFFF 52%, #FEF3C7 100%); box-shadow: 0 14px 30px rgba(180,83,9,0.13); }
+.leaderboard-card.rank-1 .leaderboard-rank { background: linear-gradient(135deg, #F59E0B, #FDE68A); color: #78350F; box-shadow: 0 10px 22px rgba(245,158,11,0.34); }
+.leaderboard-card.rank-2 .leaderboard-rank { background: linear-gradient(135deg, #94A3B8, #E2E8F0); color: #334155; box-shadow: 0 10px 22px rgba(100,116,139,0.24); }
+.leaderboard-card.rank-3 .leaderboard-rank { background: linear-gradient(135deg, #B45309, #FDBA74); color: #431407; box-shadow: 0 10px 22px rgba(180,83,9,0.24); }
+.leaderboard-card.rank-1 .leaderboard-player span::before { content: "★ "; }
+.leaderboard-card.rank-2 .leaderboard-player span::before { content: "2nd • "; }
+.leaderboard-card.rank-3 .leaderboard-player span::before { content: "3rd • "; }
 
 button { padding: 10px 16px; border-radius: 10px; border: 1px solid transparent; background: var(--accent); color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 4px; box-shadow: 0 1px 2px rgba(16,24,40,0.08); transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease; }
 
@@ -322,7 +350,7 @@ footer {
       <div id="leaderboardTab" class="section" role="tabpanel" aria-labelledby="leaderboardTabButton">
         <div class="section-card">
           <h2>Top Scorers</h2>
-          <p class="section-subtitle">Ranked by total goals.</p>
+          <p class="section-subtitle">Premium scorer leaderboard ranked by total goals, with clear goal totals and relative scoring form.</p>
           <div id="goalLeaderboard"></div>
         </div>
       </div>
@@ -347,12 +375,6 @@ footer {
           <p class="section-subtitle">Review the team record, goals for and against, assists, and overall season progress.</p>
           <div id="seasonSummary"></div>
 
-          <!-- Added goals counters -->
-          <div id="season-summary" class="stats-box" style="margin-top:12px;">
-            <h2 style="font-size:14px; margin:6px 0;">Goals</h2>
-            <p style="margin:4px 0;"><strong>Goals For:</strong> <span id="goals-for">0</span></p>
-            <p style="margin:4px 0;"><strong>Goals Against:</strong> <span id="goals-against">0</span></p>
-          </div>
 
         </div>
       </div>
@@ -539,41 +561,11 @@ matches: [
     homeAway: "Home",
     opponent: "Mulbarton Wanderers F.C. U13 Pumas",
     type: "League",
-    startingXI: [
-      "Theo Goddard",
-      "Beck Brennan",
-      "Ben Tawn",
-      "Oscar Broadley",
-      "Joey Coles",
-      "Dexter Elden",
-      "Jesse Skelton",
-      "Elias Young",
-      "Jacob Saunders"
-    ],
-    subs: [
-      "Jack Renaut",
-      "Jenson Bartrum"
-    ],
-    events: {
-      goals: [
-        { player: "Elias Young", count: 1 },
-        { player: "Jacob Saunders", count: 3 },
-        { player: "Joey Coles", count: 2 },
-        { player: "Dexter Elden", count: 2 }
-      ],
-      assists: [
-        { player: "Dexter Elden" },
-        { player: "Jacob Saunders" },
-        { player: "Jesse Skelton" }
-      ],
-      motm: "Jacob Saunders",
-      cleanSheet: null
-    },
+    startingXI: ["Theo Goddard", "Beck Brennan", "Ben Tawn", "Oscar Broadley", "Joey Coles", "Dexter Elden", "Jesse Skelton", "Elias Young", "Jacob Saunders"],
+    subs: ["Jack Renaut", "Jenson Bartrum"],
+    events: { goals: [{ player: "Elias Young", count: 1 }, { player: "Jacob Saunders", count: 3 }, { player: "Joey Coles", count: 2 }, { player: "Dexter Elden", count: 2 }], assists: [{ player: "Dexter Elden" }, { player: "Jacob Saunders" }, { player: "Jesse Skelton" }], motm: "Jacob Saunders", cleanSheet: null },
     result: "W",
-    score: {
-      for: 8,
-      against: 2
-    }
+    score: { for: 8, against: 2 }
   }
   ],
 };
@@ -815,16 +807,22 @@ function renderAppearanceHeatmap() {
 function renderGoalLeaderboard() {
   const stats = calculatePlayerStats();
   const container = document.getElementById("goalLeaderboard");
-  container.innerHTML = "";
+  container.innerHTML = "<div class='leaderboard-list'></div>";
 
+  const list = container.querySelector(".leaderboard-list");
   const sorted = Object.entries(stats)
     .sort((a, b) => b[1].goals - a[1].goals)
     .filter(([_, s]) => s.goals > 0);
 
+  const maxGoals = Math.max(...sorted.map(([_, s]) => s.goals));
   sorted.forEach(([player, s], index) => {
     const row = document.createElement("div");
-    row.innerHTML = `<strong>${index + 1}. ${player}</strong> — ${s.goals} goals`;
-    container.appendChild(row);
+    row.className = `leaderboard-card ${index < 3 ? `rank-${index + 1}` : ""}`;
+    const percentage = maxGoals ? Math.round((s.goals / maxGoals) * 100) : 0;
+    const goalLabel = s.goals === 1 ? "goal" : "goals";
+    const statusLabel = index === 0 ? "Top scorer" : index === 1 ? "Second place" : index === 2 ? "Third place" : "Scoring contribution";
+    row.innerHTML = `<div class="leaderboard-rank" aria-label="Rank ${index + 1}">${index + 1}</div><div class="leaderboard-player"><strong>${player}</strong><span>${statusLabel}</span></div><div class="leaderboard-goals">${s.goals}<span>${goalLabel}</span></div><div class="leaderboard-progress" aria-hidden="true"><span style="width:${percentage}%"></span></div>`;
+    list.appendChild(row);
   });
 
   if (sorted.length === 0) {
@@ -922,11 +920,18 @@ function renderSeasonSummary() {
   const draws = data.matches.filter(m => m.result === "D").length;
   const losses = data.matches.filter(m => m.result === "L").length;
 
+  const goalsFor = data.matches.reduce((sum, match) => sum + (match.score ? match.score.for : 0), 0);
+  const goalsAgainst = data.matches.reduce((sum, match) => sum + (match.score ? match.score.against : 0), 0);
+  const goalDifference = goalsFor - goalsAgainst;
+  const played = data.matches.length;
   container.innerHTML = `
-    <h3>Season Summary</h3>
-    <p><strong>Total Goals:</strong> ${totalGoals}</p>
-    <p><strong>Total Assists:</strong> ${totalAssists}</p>
-    <p><strong>Record:</strong> ${wins}W ${draws}D ${losses}L</p>
+    <div class="summary-hero"><h3>Season record</h3><div class="summary-record">${wins}W ${draws}D ${losses}L <span>from ${played} matches</span></div><p class="summary-note" style="color:rgba(255,255,255,0.72);">Current campaign snapshot across completed fixtures.</p></div>
+    <div class="summary-grid">
+      <div class="summary-card"><span class="summary-label">Goals for</span><span class="summary-value">${goalsFor}</span><p class="summary-note">Total goals scored</p></div>
+      <div class="summary-card"><span class="summary-label">Goals against</span><span class="summary-value">${goalsAgainst}</span><p class="summary-note">Total goals conceded</p></div>
+      <div class="summary-card"><span class="summary-label">Goal difference</span><span class="summary-value">${goalDifference > 0 ? "+" : ""}${goalDifference}</span><p class="summary-note">Scored minus conceded</p></div>
+      <div class="summary-card"><span class="summary-label">Assists</span><span class="summary-value">${totalAssists}</span><p class="summary-note">Recorded assists</p></div>
+    </div>
   `;
 }
 
@@ -1001,13 +1006,10 @@ function init() {
   renderSeasonSummary();
   renderAppearanceBreakdown();
 
-  // populate the goals counters
-  updateSeasonStats();
 }
 
 document.addEventListener('DOMContentLoaded', init);
 </script>
 
 </body>
-
-
+</html>
