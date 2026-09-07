@@ -205,6 +205,14 @@ tbody tr:hover {
 .summary-label { display: block; color: var(--muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
 .summary-value { display: block; margin-top: 6px; font-size: 28px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
 .summary-note { margin-top: 8px; color: var(--muted); font-size: 12px; }
+.leaderboard-toolbar { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin: 14px 0 4px; flex-wrap: wrap; }
+.leaderboard-toolbar label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.leaderboard-toolbar select { min-width: 210px; padding: 10px 36px 10px 12px; border-radius: 12px; border: 1px solid var(--border); background: #FFFFFF; color: var(--text); font-size: 13px; font-weight: 600; box-shadow: var(--shadow-sm); }
+.leaderboard-context { margin-top: 12px; padding: 12px 14px; border-radius: var(--radius-md); border: 1px solid rgba(124,92,252,0.16); background: #F8F7FF; color: var(--muted); font-size: 12px; font-weight: 600; }
+.leaderboard-insights { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 10px; margin-top: 12px; }
+.leaderboard-insight { padding: 12px; border-radius: var(--radius-md); background: linear-gradient(180deg, #FFFFFF 0%, #FCFCFD 100%); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.leaderboard-insight span { display: block; color: var(--muted); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.leaderboard-insight strong { display: block; margin-top: 4px; color: var(--text); font-size: 14px; line-height: 1.25; }
 .leaderboard-list { display: grid; gap: 12px; margin-top: 16px; }
 .leaderboard-card { position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; padding: 16px; border-radius: var(--radius-md); border: 1px solid rgba(124,92,252,0.16); background: linear-gradient(135deg, #FFFFFF 0%, #F8F7FF 100%); box-shadow: 0 10px 28px rgba(16,24,40,0.08); }
 .leaderboard-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: linear-gradient(180deg, var(--accent), var(--accent-bright)); }
@@ -224,6 +232,8 @@ tbody tr:hover {
 .leaderboard-card.rank-1 .leaderboard-player span::before { content: "★ "; }
 .leaderboard-card.rank-2 .leaderboard-player span::before { content: "2nd • "; }
 .leaderboard-card.rank-3 .leaderboard-player span::before { content: "3rd • "; }
+.leaderboard-card.neutral .leaderboard-rank { background: #EAECF0; color: var(--text); box-shadow: none; }
+.leaderboard-card.neutral .leaderboard-player span::before { content: ""; }
 
 button { padding: 10px 16px; border-radius: 10px; border: 1px solid transparent; background: var(--accent); color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 4px; box-shadow: 0 1px 2px rgba(16,24,40,0.08); transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease; }
 
@@ -248,6 +258,9 @@ footer {
   .tab-container::after { content: "Swipe for more tabs →"; flex: 0 0 auto; align-self: center; color: rgba(255,255,255,0.72); font-size: 12px; padding: 0 8px; }
   .tab { scroll-snap-align: start; }
   .comparison-grid { grid-template-columns: 1fr; }
+  .leaderboard-card { grid-template-columns: auto 1fr; align-items: start; }
+  .leaderboard-goals { grid-column: 1 / 3; text-align: left; }
+  .leaderboard-progress { grid-column: 1 / 3; }
   .footer-inner {
     flex-direction: column;
   }
@@ -277,7 +290,7 @@ footer {
         <button id="fixturesTabButton" class="tab" role="tab" aria-controls="fixturesTab" data-tab="fixturesTab" aria-selected="false" tabindex="-1">Fixtures</button>
         <button id="statsTabButton" class="tab" role="tab" aria-controls="statsTab" data-tab="statsTab" aria-selected="false" tabindex="-1">Player Stats</button>
         <button id="heatmapTabButton" class="tab" role="tab" aria-controls="heatmapTab" data-tab="heatmapTab" aria-selected="false" tabindex="-1">Appearance Heatmap</button>
-        <button id="leaderboardTabButton" class="tab" role="tab" aria-controls="leaderboardTab" data-tab="leaderboardTab" aria-selected="false" tabindex="-1">Top Scorers</button>
+        <button id="leaderboardTabButton" class="tab" role="tab" aria-controls="leaderboardTab" data-tab="leaderboardTab" aria-selected="false" tabindex="-1">Player Leaderboard</button>
         <button id="compareTabButton" class="tab" role="tab" aria-controls="compareTab" data-tab="compareTab" aria-selected="false" tabindex="-1">Compare Players</button>
         <button id="summaryTabButton" class="tab" role="tab" aria-controls="summaryTab" data-tab="summaryTab" aria-selected="false" tabindex="-1">Season Summary</button>
         <button id="timelineTabButton" class="tab" role="tab" aria-controls="timelineTab" data-tab="timelineTab" aria-selected="false" tabindex="-1">Match Timeline</button>
@@ -346,12 +359,13 @@ footer {
         </div>
       </div>
 
-      <!-- GOAL LEADERBOARD TAB -->
+      <!-- PLAYER LEADERBOARD TAB -->
       <div id="leaderboardTab" class="section" role="tabpanel" aria-labelledby="leaderboardTabButton">
         <div class="section-card">
-          <h2>Top Scorers</h2>
-          <p class="section-subtitle">Premium scorer leaderboard ranked by total goals, with clear goal totals and relative scoring form.</p>
-          <div id="goalLeaderboard"></div>
+          <h2>Player Leaderboard</h2>
+          <p class="section-subtitle">Premium player leaderboard ranked by goals, assists or appearances, with clear totals and relative contribution bars.</p>
+          <div class="leaderboard-toolbar"><label for="leaderboardSort">Sort by</label><select id="leaderboardSort" aria-label="Sort player leaderboard" onchange="renderPlayerLeaderboard()"><option value="goals-desc">Goals: high to low</option><option value="goals-asc">Goals: low to high</option><option value="assists-desc">Assists: high to low</option><option value="assists-asc">Assists: low to high</option><option value="apps-desc">Appearances: high to low</option><option value="apps-asc">Appearances: low to high</option><option value="name-asc">Player name: A to Z</option><option value="name-desc">Player name: Z to A</option></select></div>
+          <div id="playerLeaderboard" aria-live="polite" aria-label="Player leaderboard"></div>
         </div>
       </div>
 
@@ -803,30 +817,56 @@ function renderAppearanceHeatmap() {
   });
 }
 
-/* GOAL LEADERBOARD */
-function renderGoalLeaderboard() {
+/* PLAYER LEADERBOARD */
+function renderPlayerLeaderboard() {
   const stats = calculatePlayerStats();
-  const container = document.getElementById("goalLeaderboard");
-  container.innerHTML = "<div class='leaderboard-list'></div>";
+  const container = document.getElementById("playerLeaderboard");
+  container.innerHTML = "<div class='leaderboard-context'></div><div class='leaderboard-insights'></div><div class='leaderboard-list'></div>";
+  const sortMode = document.getElementById("leaderboardSort")?.value || "goals-desc";
+  const metric = sortMode.startsWith("assists") ? "assists" : sortMode.startsWith("apps") ? "appearances" : "goals";
+  const sortDirection = sortMode.endsWith("asc") ? "low to high" : sortMode.endsWith("desc") ? "high to low" : "alphabetically";
+  const appearances = calculateAppearances();
+  Object.keys(stats).forEach(player => { stats[player].appearances = appearances[player] || 0; });
 
   const list = container.querySelector(".leaderboard-list");
-  const sorted = Object.entries(stats)
-    .sort((a, b) => b[1].goals - a[1].goals)
-    .filter(([_, s]) => s.goals > 0);
+  const context = container.querySelector(".leaderboard-context");
+  const insights = container.querySelector(".leaderboard-insights");
+  const isNameSort = sortMode.startsWith("name");
+  let sorted = Object.entries(stats).filter(([_, s]) => s[metric] > 0);
+  sorted.sort((a, b) => {
+    if (sortMode === "goals-asc") return a[1].goals - b[1].goals || a[0].localeCompare(b[0]);
+    if (sortMode === "assists-desc") return b[1].assists - a[1].assists || b[1].goals - a[1].goals || a[0].localeCompare(b[0]);
+    if (sortMode === "assists-asc") return a[1].assists - b[1].assists || b[1].goals - a[1].goals || a[0].localeCompare(b[0]);
+    if (sortMode === "apps-desc") return b[1].appearances - a[1].appearances || b[1].goals - a[1].goals || a[0].localeCompare(b[0]);
+    if (sortMode === "apps-asc") return a[1].appearances - b[1].appearances || b[1].goals - a[1].goals || a[0].localeCompare(b[0]);
+    if (sortMode === "name-asc") return a[0].localeCompare(b[0]);
+    if (sortMode === "name-desc") return b[0].localeCompare(a[0]);
+    return b[1].goals - a[1].goals || a[0].localeCompare(b[0]);
+  });
 
-  const maxGoals = Math.max(...sorted.map(([_, s]) => s.goals));
+  const maxMetric = sorted.length ? Math.max(...sorted.map(([_, s]) => s[metric])) : 0;
+  let previousMetric = null;
+  let displayRank = 0;
+  const topMetric = maxMetric;
+  const jointTopCount = sorted.filter(([_, s]) => s[metric] === topMetric).length;
+  const metricTitle = metric === "goals" ? "Goals" : metric === "assists" ? "Assists" : "Appearances";
+  const leaderNames = sorted.filter(([_, s]) => s[metric] === topMetric).map(([name]) => name);
+  context.textContent = isNameSort ? `Showing players ${sortMode === "name-asc" ? "A to Z" : "Z to A"}. Metric ranking emphasis is hidden for alphabetical views.` : `Showing players sorted by ${metricTitle.toLowerCase()}, ${sortDirection}. Leaders are based on the highest ${metricTitle.toLowerCase()} total.`;
+  insights.innerHTML = `<div class="leaderboard-insight"><span>Current view</span><strong>${isNameSort ? "Alphabetical" : metricTitle}</strong></div><div class="leaderboard-insight"><span>Leader${leaderNames.length === 1 ? "" : "s"}</span><strong>${leaderNames.length ? leaderNames.join(", ") : "No data yet"}</strong></div><div class="leaderboard-insight"><span>Highest total</span><strong>${topMetric} ${metricTitle.toLowerCase()}</strong></div><div class="leaderboard-insight"><span>Players listed</span><strong>${sorted.length}</strong></div>`;
   sorted.forEach(([player, s], index) => {
+    if (s[metric] !== previousMetric) displayRank = index + 1;
     const row = document.createElement("div");
-    row.className = `leaderboard-card ${index < 3 ? `rank-${index + 1}` : ""}`;
-    const percentage = maxGoals ? Math.round((s.goals / maxGoals) * 100) : 0;
-    const goalLabel = s.goals === 1 ? "goal" : "goals";
-    const statusLabel = index === 0 ? "Top scorer" : index === 1 ? "Second place" : index === 2 ? "Third place" : "Scoring contribution";
-    row.innerHTML = `<div class="leaderboard-rank" aria-label="Rank ${index + 1}">${index + 1}</div><div class="leaderboard-player"><strong>${player}</strong><span>${statusLabel}</span></div><div class="leaderboard-goals">${s.goals}<span>${goalLabel}</span></div><div class="leaderboard-progress" aria-hidden="true"><span style="width:${percentage}%"></span></div>`;
+    row.className = `leaderboard-card ${isNameSort ? "neutral" : displayRank <= 3 ? `rank-${displayRank}` : ""}`;
+    const percentage = maxMetric ? Math.round((s[metric] / maxMetric) * 100) : 0;
+    const metricLabel = metric === "goals" ? (s.goals === 1 ? "goal" : "goals") : metric === "assists" ? (s.assists === 1 ? "assist" : "assists") : (s.appearances === 1 ? "appearance" : "appearances");
+    const statusLabel = isNameSort ? "Player profile" : displayRank === 1 ? (jointTopCount > 1 ? `Joint top ${metric === "goals" ? "scorer" : metric === "assists" ? "creator" : "appearance maker"}` : `Top ${metric === "goals" ? "scorer" : metric === "assists" ? "creator" : "appearance maker"}`) : displayRank === 2 ? "Second place" : displayRank === 3 ? "Third place" : "Squad contribution";
+    row.innerHTML = `<div class="leaderboard-rank" aria-label="${isNameSort ? "Player" : `Rank ${displayRank}`}">${isNameSort ? "—" : displayRank}</div><div class="leaderboard-player"><strong>${player}</strong><span>${statusLabel}</span></div><div class="leaderboard-goals">${s[metric]}<span>${metricLabel}</span></div><div class="leaderboard-progress" aria-hidden="true"><span style="width:${percentage}%"></span></div>`;
+    previousMetric = s[metric];
     list.appendChild(row);
   });
 
   if (sorted.length === 0) {
-    container.innerHTML = "<p>No goals recorded yet.</p>";
+    container.innerHTML = `<p>No ${metricTitle.toLowerCase()} recorded yet.</p>`;
   }
 }
 
@@ -972,22 +1012,6 @@ function renderAppearanceBreakdown() {
   });
 }
 
-  
-function updateSeasonStats() {
-  let totalGF = 0;
-  let totalGA = 0;
-
-  data.matches.forEach(match => {
-    if (match.score) {
-      totalGF += match.score.for;
-      totalGA += match.score.against;
-    }
-  });
-
-  document.getElementById("goals-for").textContent = totalGF;
-  document.getElementById("goals-against").textContent = totalGA;
-}
-
 
 /* INIT */
 function init() {
@@ -1000,7 +1024,7 @@ function init() {
   renderFormGraph();
   renderPlayerStats();
   renderAppearanceHeatmap();
-  renderGoalLeaderboard();
+  renderPlayerLeaderboard();
   populateComparisonDropdowns();
   renderMatchTimeline();
   renderSeasonSummary();
