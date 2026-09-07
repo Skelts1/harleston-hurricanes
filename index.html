@@ -55,6 +55,7 @@ body { font-family: Inter, Aptos, system-ui, -apple-system, BlinkMacSystemFont, 
   background: rgba(255,255,255,0.15);
   opacity: 1;
 }
+.tab:focus-visible, button:focus-visible, select:focus-visible { outline: 3px solid #FDB022; outline-offset: 3px; box-shadow: 0 0 0 5px rgba(253,176,34,0.25); }
 
 .tab.active { background: rgba(255,255,255,0.12); color: #FFFFFF; border-color: rgba(255,255,255,0.18); box-shadow: inset 0 -2px 0 var(--accent-bright); opacity: 1; }
 
@@ -132,11 +133,11 @@ main {
 }
 
 .heat-box { min-width: 140px; min-height: 112px; flex: 1 1 160px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; border-radius: var(--radius-md); color: #FFFFFF; font-weight: 700; text-align: left; font-size: 13px; padding: 16px; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.16), var(--shadow-sm); }
+.heat-box { color: #101828; border: 1px solid rgba(16,24,40,0.18); }
 
-.heat-box small {
-  font-size: 11px;
-  color: #f0f0f0;
-}
+.heat-box small { font-size: 11px; color: #101828; font-weight: 600; }
+.heatmap-legend { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 12px 0 10px; font-size: 12px; color: var(--muted); }
+.heatmap-scale { width: 140px; height: 10px; border-radius: 999px; background: linear-gradient(90deg, rgba(124,92,252,0.32), rgba(124,92,252,1)); border: 1px solid rgba(124,92,252,0.18); }
 
 /* Table wrapper */
 .table-wrapper {
@@ -191,6 +192,10 @@ tbody tr:hover {
   margin-top: 10px;
   font-size: 13px;
 }
+.comparison-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 14px; }
+.comparison-card { border: 1px solid var(--border); border-radius: var(--radius-md); background: linear-gradient(180deg, #FFFFFF 0%, #FCFCFD 100%); padding: 16px; box-shadow: var(--shadow-sm); }
+.comparison-card h3 { margin-bottom: 10px; font-size: 16px; color: var(--text); }
+.comparison-stat { display: flex; justify-content: space-between; gap: 10px; padding: 8px 0; border-top: 1px solid #EAECF0; }
 
 button { padding: 10px 16px; border-radius: 10px; border: 1px solid transparent; background: var(--accent); color: #FFFFFF; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 4px; box-shadow: 0 1px 2px rgba(16,24,40,0.08); transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease; }
 
@@ -211,6 +216,10 @@ footer {
     align-items: flex-start;
   }
 
+  .tab-container { width: 100%; padding-bottom: 14px; scrollbar-width: thin; scroll-snap-type: x proximity; }
+  .tab-container::after { content: "Swipe for more tabs →"; flex: 0 0 auto; align-self: center; color: rgba(255,255,255,0.72); font-size: 12px; padding: 0 8px; }
+  .tab { scroll-snap-align: start; }
+  .comparison-grid { grid-template-columns: 1fr; }
   .footer-inner {
     flex-direction: column;
   }
@@ -227,8 +236,8 @@ footer {
    <div class="header-title" style="display:flex; align-items:center; gap:20px;">
 <img src="badge.jpeg" alt="Harleston U13 Hurricanes club badge" width="64" height="64" style="height:64px; width:64px; border-radius:18px; object-fit:cover; border:1px solid rgba(255,255,255,0.18); box-shadow:0 8px 20px rgba(0,0,0,0.22);">
         <div style="display:flex; flex-direction:column; justify-content:center;">
-        <h1 style="font-size:26px; margin:0;">Harleston U13 Hurricanes Dashboard</h1>
-<span style="font-size:13px; color:#e0e0e0;">Live season intelligence for fixtures, performance and player development</span>
+        <h1 style="font-size:26px; margin:0;">Harleston Hurricanes</h1>
+<span style="font-size:13px; color:#e0e0e0;">U13 season centre • 2026/27 fixtures, results and player development</span>
   </div>
 </div>
 </div>
@@ -254,9 +263,9 @@ footer {
       <!-- HOME TAB -->
       <div id="homeTab" class="section active" role="tabpanel" aria-labelledby="homeTabButton">
         <div class="section-card">
-          <h2>Welcome</h2>
+          <h2>Overview</h2>
           <p class="section-subtitle">
-            This dashboard tracks the full Harleston U13 Hurricanes season across fixtures, stats and appearances.
+            Your at-a-glance view of the next fixture, latest result, season progress and current form.
           </p>
 
           <div id="nextMatchBox" class="info-box">Loading next match…</div>
@@ -270,7 +279,7 @@ footer {
       <div id="squadTab" class="section" role="tabpanel" aria-labelledby="squadTabButton">
         <div class="section-card">
           <h2>Squad List</h2>
-          <p class="section-subtitle">Registered players, staff and positions.</p>
+          <p class="section-subtitle">Registered players and positions, with the current management team.</p>
 
           <div style="margin-bottom:15px; padding:10px; border:1px solid #ddd; border-radius:8px; background:#fafafa;">
             <strong>Manager:</strong> Steve Goddard<br>
@@ -285,7 +294,7 @@ footer {
       <div id="fixturesTab" class="section" role="tabpanel" aria-labelledby="fixturesTabButton">
         <div class="section-card">
           <h2>Fixtures</h2>
-          <p class="section-subtitle">Upcoming and scheduled matches.</p>
+          <p class="section-subtitle">Future matches, with date, opponent, venue and kick-off details.</p>
           <div id="fixtures"></div>
         </div>
       </div>
@@ -294,7 +303,7 @@ footer {
       <div id="statsTab" class="section" role="tabpanel" aria-labelledby="statsTabButton">
         <div class="section-card">
           <h2>Player Stats</h2>
-          <p class="section-subtitle">Goals, assists, MOTM and clean sheets per player.</p>
+          <p class="section-subtitle">Goals, assists, player-of-the-match awards and clean sheets for every player.</p>
           <div id="playerStats"></div>
         </div>
       </div>
@@ -303,8 +312,9 @@ footer {
       <div id="heatmapTab" class="section" role="tabpanel" aria-labelledby="heatmapTabButton">
         <div class="section-card">
           <h2>Appearance Heatmap</h2>
-          <p class="section-subtitle">Visual intensity of appearances across the squad.</p>
-          <div id="appearanceHeatmap" class="heatmap-wrapper"></div>
+          <p class="section-subtitle">Compare match involvement across the squad at a glance. Darker cards indicate more appearances.</p>
+          <div class="heatmap-legend" aria-label="Appearance heatmap legend"><span>Fewer appearances</span><span class="heatmap-scale" aria-hidden="true"></span><span>More appearances</span><span>Each card also shows the exact appearance total.</span></div>
+          <div id="appearanceHeatmap" class="heatmap-wrapper" aria-live="polite" aria-label="Appearance totals by player"></div>
         </div>
       </div>
 
@@ -321,12 +331,12 @@ footer {
       <div id="compareTab" class="section" role="tabpanel" aria-labelledby="compareTabButton">
         <div class="section-card">
           <h2>Player Comparison</h2>
-          <p class="section-subtitle">Compare two players across key metrics.</p>
+          <p class="section-subtitle">Select two different players to compare goals, assists, player-of-the-match awards and clean sheets.</p>
           <select id="compareA" aria-label="First player to compare"></select>
           <select id="compareB" aria-label="Second player to compare"></select>
           <br>
-          <button onclick="renderComparison()">Compare</button>
-          <div id="comparisonResult"></div>
+          <button onclick="renderComparison()">Compare player stats</button>
+          <div id="comparisonResult" aria-live="polite" aria-atomic="true"></div>
         </div>
       </div>
 
@@ -334,7 +344,7 @@ footer {
       <div id="summaryTab" class="section" role="tabpanel" aria-labelledby="summaryTabButton">
         <div class="section-card">
           <h2>Season Summary</h2>
-          <p class="section-subtitle">High‑level view of goals, assists and record.</p>
+          <p class="section-subtitle">Review the team record, goals for and against, assists, and overall season progress.</p>
           <div id="seasonSummary"></div>
 
           <!-- Added goals counters -->
@@ -351,7 +361,7 @@ footer {
       <div id="timelineTab" class="section" role="tabpanel" aria-labelledby="timelineTabButton">
         <div class="section-card">
           <h2>Match Timeline</h2>
-          <p class="section-subtitle">Chronological view of match events.</p>
+          <p class="section-subtitle">Review completed matches in date order, including the result, scorers, assists and player of the match.</p>
           <div id="matchTimeline"></div>
         </div>
       </div>
@@ -388,7 +398,7 @@ footer {
   <footer>
     <div class="footer-inner">
       <span>Harleston U13 Hurricanes • Season 2026/27</span>
-<span>Live dashboard • Updated as fixtures and player statistics are recorded</span>
+<span><strong>Last updated:</strong> 7 September 2026 • Updated when fixtures, results and player statistics are recorded</span>
     </div>
   </footer>
 
@@ -621,7 +631,7 @@ function renderFixtures() {
       <strong>${formatDateFull(match.date)}</strong> — <span>${match.type}</span><br>
       ${match.homeAway} vs ${match.opponent}<br>
       <small>${match.venue}</small><br>
-      <small><strong>Kickoff:</strong> ${match.kickoff}</small>
+      <small><strong>Kick-off:</strong> ${match.kickoff === "TBC" ? "Time to be confirmed." : match.kickoff}</small>
     `;
     fixturesEl.appendChild(matchDiv);
   });
@@ -646,7 +656,7 @@ function renderNextMatch() {
   }
 
   const kickoffMatch = next.kickoff.match(/^(\d{1,2}):(\d{2})(am|pm)$/i); const matchDate = new Date(`${next.date}T00:00:00`); if (kickoffMatch) { let hours = Number(kickoffMatch[1]) % 12; if (kickoffMatch[3].toLowerCase() === "pm") hours += 12; matchDate.setHours(hours, Number(kickoffMatch[2]), 0, 0); }
-  if (!kickoffMatch) { box.innerHTML = `<h3>Next Match</h3><p><strong>${formatDateFull(next.date)}</strong></p><p>${next.homeAway} vs ${next.opponent} — <strong>${next.type}</strong></p><p><small>${next.venue}</small></p><p><strong>Kickoff:</strong> TBC</p>`; return; }
+  if (!kickoffMatch) { box.innerHTML = `<h3>Next Match</h3><p><strong>${formatDateFull(next.date)}</strong></p><p>${next.homeAway} vs ${next.opponent} — <strong>${next.type}</strong></p><p><small>${next.venue}</small></p><p><strong>Kick-off:</strong> Time to be confirmed.</p>`; return; }
   const remainingMs = Math.max(0, matchDate - new Date()); const diffDays = Math.floor(remainingMs / (1000 * 60 * 60 * 24)); const diffHours = Math.floor((remainingMs / (1000 * 60 * 60)) % 24); const diffMinutes = Math.floor((remainingMs / (1000 * 60)) % 60);
 
   box.innerHTML = `
@@ -654,7 +664,7 @@ function renderNextMatch() {
     <p><strong>${formatDateFull(next.date)}</strong></p>
     <p>${next.homeAway} vs ${next.opponent} — <strong>${next.type}</strong></p>
     <p><small>${next.venue}</small></p>
-    <p><strong>Kickoff:</strong> ${next.kickoff}</p>
+    <p><strong>Kick-off:</strong> ${next.kickoff}</p>
     <p><strong>Countdown:</strong><br>
     ${Math.max(0, diffDays)} days, ${Math.max(0, diffHours)} hours, ${Math.max(0, diffMinutes)} minutes</p>
   `;
@@ -695,7 +705,7 @@ function renderLastMatch() {
     <p><strong>${formatDateFull(last.date)}</strong></p>
     <p>${last.homeAway} vs ${last.opponent} — <strong>${last.type}</strong></p>
     <p><strong>Result:</strong> ${resultIcon} (${last.score.for}-${last.score.against})</p>
-    <p><strong>MOTM:</strong> ${last.events.motm}</p>
+    <p><strong>Player of the Match:</strong> ${last.events.motm}</p>
     <p><strong>Goals:</strong> ${goals || "None"}</p>
     <p><strong>Assists:</strong> ${assists || "None"}</p>
   `;
@@ -761,7 +771,7 @@ function renderPlayerStats() {
       <strong>${player}</strong><br>
       Goals: ${stats[player].goals}<br>
       Assists: ${stats[player].assists}<br>
-      MOTM: ${stats[player].motm}<br>
+      Player of the Match awards: ${stats[player].motm}<br>
       Clean Sheets: ${stats[player].cleanSheets}
     `;
     container.appendChild(div);
@@ -796,7 +806,7 @@ function renderAppearanceHeatmap() {
     const box = document.createElement("div");
     box.className = "heat-box";
     box.style.background = intensity;
-    box.innerHTML = `${player}<br><small>${apps[player]} apps</small>`;
+    box.innerHTML = `${player}<br><small>${apps[player]} appearance${apps[player] === 1 ? "" : "s"}</small>`;
     container.appendChild(box);
   });
 }
@@ -854,11 +864,10 @@ function renderComparison() {
   const b = stats[pB];
 
   document.getElementById("comparisonResult").innerHTML = `
-    <h3>${pA} vs ${pB}</h3>
-    <p><strong>Goals:</strong> ${a.goals} vs ${b.goals}</p>
-    <p><strong>Assists:</strong> ${a.assists} vs ${b.assists}</p>
-    <p><strong>MOTM:</strong> ${a.motm} vs ${b.motm}</p>
-    <p><strong>Clean Sheets:</strong> ${a.cleanSheets} vs ${b.cleanSheets}</p>
+    <div class="comparison-grid">
+      <div class="comparison-card"><h3>${pA}</h3><div class="comparison-stat"><span>Goals</span><strong>${a.goals}</strong></div><div class="comparison-stat"><span>Assists</span><strong>${a.assists}</strong></div><div class="comparison-stat"><span>Player of the Match awards</span><strong>${a.motm}</strong></div><div class="comparison-stat"><span>Clean Sheets</span><strong>${a.cleanSheets}</strong></div></div>
+      <div class="comparison-card"><h3>${pB}</h3><div class="comparison-stat"><span>Goals</span><strong>${b.goals}</strong></div><div class="comparison-stat"><span>Assists</span><strong>${b.assists}</strong></div><div class="comparison-stat"><span>Player of the Match awards</span><strong>${b.motm}</strong></div><div class="comparison-stat"><span>Clean Sheets</span><strong>${b.cleanSheets}</strong></div></div>
+    </div>
   `;
 }
 
@@ -888,7 +897,7 @@ function renderMatchTimeline() {
       <strong>${formatDateFull(match.date)}</strong><br>
       ${match.homeAway} vs ${match.opponent} — <strong>${match.type}</strong><br>
       <strong>Result:</strong> ${match.result} (${match.score.for}-${match.score.against})<br>
-      <strong>MOTM:</strong> ${match.events.motm}<br>
+      <strong>Player of the Match:</strong> ${match.events.motm}<br>
       <strong>Goals:</strong> ${goals || "None"}<br>
       <strong>Assists:</strong> ${assists || "None"}
     `;
@@ -1000,5 +1009,5 @@ document.addEventListener('DOMContentLoaded', init);
 </script>
 
 </body>
-</html
+
 
