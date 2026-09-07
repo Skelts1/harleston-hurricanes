@@ -213,6 +213,10 @@ tbody tr:hover {
 .leaderboard-insight { padding: 12px; border-radius: var(--radius-md); background: linear-gradient(180deg, #FFFFFF 0%, #FCFCFD 100%); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
 .leaderboard-insight span { display: block; color: var(--muted); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
 .leaderboard-insight strong { display: block; margin-top: 4px; color: var(--text); font-size: 14px; line-height: 1.25; }
+.leaderboard-panels { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 16px; }
+.leaderboard-panel { padding: 18px; border-radius: var(--radius-lg); background: linear-gradient(180deg, #FFFFFF 0%, #FCFCFD 100%); border: 1px solid rgba(124,92,252,0.16); box-shadow: var(--shadow-md); }
+.leaderboard-panel h3 { margin: 0 0 4px; font-size: 17px; color: var(--text); letter-spacing: -0.02em; }
+.leaderboard-panel-subtitle { margin-bottom: 12px; color: var(--muted); font-size: 12px; }
 .leaderboard-list { display: grid; gap: 12px; margin-top: 16px; }
 .leaderboard-card { position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; padding: 16px; border-radius: var(--radius-md); border: 1px solid rgba(124,92,252,0.16); background: linear-gradient(135deg, #FFFFFF 0%, #F8F7FF 100%); box-shadow: 0 10px 28px rgba(16,24,40,0.08); }
 .leaderboard-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 5px; background: linear-gradient(180deg, var(--accent), var(--accent-bright)); }
@@ -229,7 +233,7 @@ tbody tr:hover {
 .leaderboard-card.rank-1 .leaderboard-rank { background: linear-gradient(135deg, #F59E0B, #FDE68A); color: #78350F; box-shadow: 0 10px 22px rgba(245,158,11,0.34); }
 .leaderboard-card.rank-2 .leaderboard-rank { background: linear-gradient(135deg, #94A3B8, #E2E8F0); color: #334155; box-shadow: 0 10px 22px rgba(100,116,139,0.24); }
 .leaderboard-card.rank-3 .leaderboard-rank { background: linear-gradient(135deg, #B45309, #FDBA74); color: #431407; box-shadow: 0 10px 22px rgba(180,83,9,0.24); }
-.leaderboard-card.rank-1 .leaderboard-player span::before { content: "★ "; }
+.leaderboard-card.rank-1 .leaderboard-player span::before { content: "1st • "; }
 .leaderboard-card.rank-2 .leaderboard-player span::before { content: "2nd • "; }
 .leaderboard-card.rank-3 .leaderboard-player span::before { content: "3rd • "; }
 .leaderboard-card.neutral .leaderboard-rank { background: #EAECF0; color: var(--text); box-shadow: none; }
@@ -259,6 +263,7 @@ footer {
   .tab { scroll-snap-align: start; }
   .comparison-grid { grid-template-columns: 1fr; }
   .leaderboard-card { grid-template-columns: auto 1fr; align-items: start; }
+  .leaderboard-panels { grid-template-columns: 1fr; }
   .leaderboard-goals { grid-column: 1 / 3; text-align: left; }
   .leaderboard-progress { grid-column: 1 / 3; }
   .footer-inner {
@@ -363,9 +368,8 @@ footer {
       <div id="leaderboardTab" class="section" role="tabpanel" aria-labelledby="leaderboardTabButton">
         <div class="section-card">
           <h2>Player Leaderboard</h2>
-          <p class="section-subtitle">Premium player leaderboard ranked by goals, assists or appearances, with clear totals and relative contribution bars.</p>
-          <div class="leaderboard-toolbar"><label for="leaderboardSort">Sort by</label><select id="leaderboardSort" aria-label="Sort player leaderboard" onchange="renderPlayerLeaderboard()"><option value="goals-desc">Goals: high to low</option><option value="goals-asc">Goals: low to high</option><option value="assists-desc">Assists: high to low</option><option value="assists-asc">Assists: low to high</option><option value="apps-desc">Appearances: high to low</option><option value="apps-asc">Appearances: low to high</option><option value="name-asc">Player name: A to Z</option><option value="name-desc">Player name: Z to A</option></select></div>
-          <div id="playerLeaderboard" aria-live="polite" aria-label="Player leaderboard"></div>
+          <p class="section-subtitle">Permanent goals and assists leaderboards, each with independent sorting and premium ranked cards.</p>
+          <div class="leaderboard-panels"><div class="leaderboard-panel"><h3>Goals leaderboard</h3><p class="leaderboard-panel-subtitle">Ranked by goals scored.</p><div class="leaderboard-toolbar"><label for="goalsLeaderboardSort">Sort goals</label><select id="goalsLeaderboardSort" aria-label="Sort goals leaderboard" onchange="renderPlayerLeaderboards()"><option value="desc">High to low</option><option value="asc">Low to high</option><option value="name-asc">Player name: A to Z</option><option value="name-desc">Player name: Z to A</option></select></div><div id="goalsLeaderboard" aria-live="polite" aria-label="Goals leaderboard"></div></div><div class="leaderboard-panel"><h3>Assists leaderboard</h3><p class="leaderboard-panel-subtitle">Ranked by assists recorded.</p><div class="leaderboard-toolbar"><label for="assistsLeaderboardSort">Sort assists</label><select id="assistsLeaderboardSort" aria-label="Sort assists leaderboard" onchange="renderPlayerLeaderboards()"><option value="desc">High to low</option><option value="asc">Low to high</option><option value="name-asc">Player name: A to Z</option><option value="name-desc">Player name: Z to A</option></select></div><div id="assistsLeaderboard" aria-live="polite" aria-label="Assists leaderboard"></div></div></div>
         </div>
       </div>
 
@@ -373,7 +377,7 @@ footer {
       <div id="compareTab" class="section" role="tabpanel" aria-labelledby="compareTabButton">
         <div class="section-card">
           <h2>Player Comparison</h2>
-          <p class="section-subtitle">Select two different players to compare goals, assists, player-of-the-match awards and clean sheets.</p>
+          <p class="section-subtitle">Select two different players to compare goals, assists, appearances, player-of-the-match awards and clean sheets.</p>
           <select id="compareA" aria-label="First player to compare"></select>
           <select id="compareB" aria-label="Second player to compare"></select>
           <br>
@@ -818,57 +822,33 @@ function renderAppearanceHeatmap() {
 }
 
 /* PLAYER LEADERBOARD */
-function renderPlayerLeaderboard() {
+function renderPlayerLeaderboards() {
   const stats = calculatePlayerStats();
-  const container = document.getElementById("playerLeaderboard");
-  container.innerHTML = "<div class='leaderboard-context'></div><div class='leaderboard-insights'></div><div class='leaderboard-list'></div>";
-  const sortMode = document.getElementById("leaderboardSort")?.value || "goals-desc";
-  const metric = sortMode.startsWith("assists") ? "assists" : sortMode.startsWith("apps") ? "appearances" : "goals";
-  const sortDirection = sortMode.endsWith("asc") ? "low to high" : sortMode.endsWith("desc") ? "high to low" : "alphabetically";
-  const appearances = calculateAppearances();
-  Object.keys(stats).forEach(player => { stats[player].appearances = appearances[player] || 0; });
+  renderLeaderboardPanel("goals", "goalsLeaderboard", document.getElementById("goalsLeaderboardSort")?.value || "desc", stats);
+  renderLeaderboardPanel("assists", "assistsLeaderboard", document.getElementById("assistsLeaderboardSort")?.value || "desc", stats);
+}
 
-  const list = container.querySelector(".leaderboard-list");
-  const context = container.querySelector(".leaderboard-context");
-  const insights = container.querySelector(".leaderboard-insights");
+function renderLeaderboardPanel(metric, containerId, sortMode, stats) {
+  const container = document.getElementById(containerId);
+  const metricTitle = metric === "goals" ? "Goals" : "Assists";
+  const metricNoun = metric === "goals" ? "goal" : "assist";
   const isNameSort = sortMode.startsWith("name");
   let sorted = Object.entries(stats).filter(([_, s]) => s[metric] > 0);
-  sorted.sort((a, b) => {
-    if (sortMode === "goals-asc") return a[1].goals - b[1].goals || a[0].localeCompare(b[0]);
-    if (sortMode === "assists-desc") return b[1].assists - a[1].assists || b[1].goals - a[1].goals || a[0].localeCompare(b[0]);
-    if (sortMode === "assists-asc") return a[1].assists - b[1].assists || b[1].goals - a[1].goals || a[0].localeCompare(b[0]);
-    if (sortMode === "apps-desc") return b[1].appearances - a[1].appearances || b[1].goals - a[1].goals || a[0].localeCompare(b[0]);
-    if (sortMode === "apps-asc") return a[1].appearances - b[1].appearances || b[1].goals - a[1].goals || a[0].localeCompare(b[0]);
-    if (sortMode === "name-asc") return a[0].localeCompare(b[0]);
-    if (sortMode === "name-desc") return b[0].localeCompare(a[0]);
-    return b[1].goals - a[1].goals || a[0].localeCompare(b[0]);
-  });
-
+  sorted.sort((a, b) => sortMode === "asc" ? a[1][metric] - b[1][metric] || a[0].localeCompare(b[0]) : sortMode === "name-asc" ? a[0].localeCompare(b[0]) : sortMode === "name-desc" ? b[0].localeCompare(a[0]) : b[1][metric] - a[1][metric] || a[0].localeCompare(b[0]));
   const maxMetric = sorted.length ? Math.max(...sorted.map(([_, s]) => s[metric])) : 0;
-  let previousMetric = null;
-  let displayRank = 0;
-  const topMetric = maxMetric;
-  const jointTopCount = sorted.filter(([_, s]) => s[metric] === topMetric).length;
-  const metricTitle = metric === "goals" ? "Goals" : metric === "assists" ? "Assists" : "Appearances";
-  const leaderNames = sorted.filter(([_, s]) => s[metric] === topMetric).map(([name]) => name);
-  context.textContent = isNameSort ? `Showing players ${sortMode === "name-asc" ? "A to Z" : "Z to A"}. Metric ranking emphasis is hidden for alphabetical views.` : `Showing players sorted by ${metricTitle.toLowerCase()}, ${sortDirection}. Leaders are based on the highest ${metricTitle.toLowerCase()} total.`;
-  insights.innerHTML = `<div class="leaderboard-insight"><span>Current view</span><strong>${isNameSort ? "Alphabetical" : metricTitle}</strong></div><div class="leaderboard-insight"><span>Leader${leaderNames.length === 1 ? "" : "s"}</span><strong>${leaderNames.length ? leaderNames.join(", ") : "No data yet"}</strong></div><div class="leaderboard-insight"><span>Highest total</span><strong>${topMetric} ${metricTitle.toLowerCase()}</strong></div><div class="leaderboard-insight"><span>Players listed</span><strong>${sorted.length}</strong></div>`;
-  sorted.forEach(([player, s], index) => {
-    if (s[metric] !== previousMetric) displayRank = index + 1;
-    const row = document.createElement("div");
-    row.className = `leaderboard-card ${isNameSort ? "neutral" : displayRank <= 3 ? `rank-${displayRank}` : ""}`;
-    const percentage = maxMetric ? Math.round((s[metric] / maxMetric) * 100) : 0;
-    const metricLabel = metric === "goals" ? (s.goals === 1 ? "goal" : "goals") : metric === "assists" ? (s.assists === 1 ? "assist" : "assists") : (s.appearances === 1 ? "appearance" : "appearances");
-    const statusLabel = isNameSort ? "Player profile" : displayRank === 1 ? (jointTopCount > 1 ? `Joint top ${metric === "goals" ? "scorer" : metric === "assists" ? "creator" : "appearance maker"}` : `Top ${metric === "goals" ? "scorer" : metric === "assists" ? "creator" : "appearance maker"}`) : displayRank === 2 ? "Second place" : displayRank === 3 ? "Third place" : "Squad contribution";
-    row.innerHTML = `<div class="leaderboard-rank" aria-label="${isNameSort ? "Player" : `Rank ${displayRank}`}">${isNameSort ? "—" : displayRank}</div><div class="leaderboard-player"><strong>${player}</strong><span>${statusLabel}</span></div><div class="leaderboard-goals">${s[metric]}<span>${metricLabel}</span></div><div class="leaderboard-progress" aria-hidden="true"><span style="width:${percentage}%"></span></div>`;
-    previousMetric = s[metric];
-    list.appendChild(row);
-  });
-
-  if (sorted.length === 0) {
-    container.innerHTML = `<p>No ${metricTitle.toLowerCase()} recorded yet.</p>`;
-  }
+  const leaderNames = sorted.filter(([_, s]) => s[metric] === maxMetric).map(([name]) => name);
+  const rankLookup = {};
+  let previousValue = null, displayRank = 0;
+  [...sorted].sort((a, b) => b[1][metric] - a[1][metric] || a[0].localeCompare(b[0])).forEach(([name, s], index) => { if (s[metric] !== previousValue) displayRank = index + 1; rankLookup[name] = displayRank; previousValue = s[metric]; });
+  container.innerHTML = "<div class='leaderboard-context'></div><div class='leaderboard-insights'></div><div class='leaderboard-list'></div>";
+  const label = maxMetric === 1 ? metricNoun : `${metricNoun}s`;
+  container.querySelector(".leaderboard-context").textContent = isNameSort ? `${metricTitle} leaderboard shown alphabetically. Ranking emphasis is hidden.` : `${metricTitle} leaderboard sorted ${sortMode === "asc" ? "low to high" : "high to low"}. Ranks still reflect highest ${label} total.`;
+  container.querySelector(".leaderboard-insights").innerHTML = `<div class="leaderboard-insight"><span>Leader${leaderNames.length === 1 ? "" : "s"}</span><strong>${leaderNames.length ? leaderNames.join(", ") : "No data yet"}</strong></div><div class="leaderboard-insight"><span>Highest total</span><strong>${maxMetric} ${label}</strong></div><div class="leaderboard-insight"><span>Players listed</span><strong>${sorted.length}</strong></div>`;
+  const list = container.querySelector(".leaderboard-list");
+  sorted.forEach(([player, s]) => { const rank = rankLookup[player]; const row = document.createElement("div"); const value = s[metric]; const valueLabel = value === 1 ? metricNoun : `${metricNoun}s`; const percentage = maxMetric ? Math.round((value / maxMetric) * 100) : 0; row.className = `leaderboard-card ${isNameSort ? "neutral" : rank <= 3 ? `rank-${rank}` : ""}`; row.innerHTML = `<div class="leaderboard-rank" aria-label="${isNameSort ? "Player" : `Rank ${rank}`}">${isNameSort ? "—" : rank}</div><div class="leaderboard-player"><strong>${player}</strong><span>${isNameSort ? "Player profile" : rank === 1 ? (leaderNames.length > 1 ? `Joint top ${metric === "goals" ? "scorer" : "creator"}` : `Top ${metric === "goals" ? "scorer" : "creator"}`) : rank === 2 ? "Second place" : rank === 3 ? "Third place" : "Squad contribution"}</span></div><div class="leaderboard-goals">${value}<span>${valueLabel}</span></div><div class="leaderboard-progress" aria-hidden="true"><span style="width:${percentage}%"></span></div>`; list.appendChild(row); });
+  if (!sorted.length) container.innerHTML = `<p>No ${metricTitle.toLowerCase()} recorded yet.</p>`;
 }
+  const stats = calculatePlayerStats();
 
 /* PLAYER COMPARISON */
 function populateComparisonDropdowns() {
@@ -900,11 +880,12 @@ function renderComparison() {
   const stats = calculatePlayerStats();
   const a = stats[pA];
   const b = stats[pB];
+  const appearances = calculateAppearances();
 
   document.getElementById("comparisonResult").innerHTML = `
     <div class="comparison-grid">
-      <div class="comparison-card"><h3>${pA}</h3><div class="comparison-stat"><span>Goals</span><strong>${a.goals}</strong></div><div class="comparison-stat"><span>Assists</span><strong>${a.assists}</strong></div><div class="comparison-stat"><span>Player of the Match awards</span><strong>${a.motm}</strong></div><div class="comparison-stat"><span>Clean Sheets</span><strong>${a.cleanSheets}</strong></div></div>
-      <div class="comparison-card"><h3>${pB}</h3><div class="comparison-stat"><span>Goals</span><strong>${b.goals}</strong></div><div class="comparison-stat"><span>Assists</span><strong>${b.assists}</strong></div><div class="comparison-stat"><span>Player of the Match awards</span><strong>${b.motm}</strong></div><div class="comparison-stat"><span>Clean Sheets</span><strong>${b.cleanSheets}</strong></div></div>
+      <div class="comparison-card"><h3>${pA}</h3><div class="comparison-stat"><span>Goals</span><strong>${a.goals}</strong></div><div class="comparison-stat"><span>Assists</span><strong>${a.assists}</strong></div><div class="comparison-stat"><span>Appearances</span><strong>${appearances[pA] || 0}</strong></div><div class="comparison-stat"><span>Player of the Match awards</span><strong>${a.motm}</strong></div><div class="comparison-stat"><span>Clean Sheets</span><strong>${a.cleanSheets}</strong></div></div>
+      <div class="comparison-card"><h3>${pB}</h3><div class="comparison-stat"><span>Goals</span><strong>${b.goals}</strong></div><div class="comparison-stat"><span>Assists</span><strong>${b.assists}</strong></div><div class="comparison-stat"><span>Appearances</span><strong>${appearances[pB] || 0}</strong></div><div class="comparison-stat"><span>Player of the Match awards</span><strong>${b.motm}</strong></div><div class="comparison-stat"><span>Clean Sheets</span><strong>${b.cleanSheets}</strong></div></div>
     </div>
   `;
 }
@@ -952,8 +933,6 @@ function renderSeasonSummary() {
   }
 
   const stats = calculatePlayerStats();
-  const totalGoals = Object.values(stats)
-    .reduce((sum, p) => sum + p.goals, 0);
   const totalAssists = Object.values(stats)
     .reduce((sum, p) => sum + p.assists, 0);
   const wins = data.matches.filter(m => m.result === "W").length;
@@ -1024,7 +1003,7 @@ function init() {
   renderFormGraph();
   renderPlayerStats();
   renderAppearanceHeatmap();
-  renderPlayerLeaderboard();
+  renderPlayerLeaderboards();
   populateComparisonDropdowns();
   renderMatchTimeline();
   renderSeasonSummary();
