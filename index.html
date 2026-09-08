@@ -95,34 +95,55 @@ main {
   margin-bottom: 4px;
 }
 
+.matchday-hero { margin-top: 16px; padding: 24px; border-radius: var(--radius-lg); background: linear-gradient(135deg, #101828 0%, #342A68 100%); color: #FFFFFF; box-shadow: 0 18px 42px rgba(16,24,40,0.18); position: relative; overflow: hidden; }
+.matchday-hero h3 { margin-bottom: 8px; color: #FFFFFF; font-size: 15px; text-transform: uppercase; letter-spacing: 0.08em; }
+.matchday-fixture { font-size: 30px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.15; margin: 6px 0; }
+.snapshot-grid, .leaders-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 16px; }
+.snapshot-card, .leader-card { padding: 16px; border-radius: var(--radius-md); background: linear-gradient(180deg, #FFFFFF 0%, #FCFCFD 100%); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.snapshot-card span, .leader-card span { display: block; color: var(--muted); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.snapshot-card strong, .leader-card strong { display: block; margin-top: 6px; font-size: 22px; color: var(--text); line-height: 1.15; }
 /* Lists */
-#squad {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 8px;
-}
+.squad-summary { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin: 16px 0; }
+.squad-summary-card { padding: 16px; border-radius: var(--radius-md); background: linear-gradient(180deg, #FFFFFF 0%, #FCFCFD 100%); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.squad-summary-card span { display: block; color: var(--muted); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.squad-summary-card strong { display: block; margin-top: 6px; color: var(--text); font-size: 22px; }
+.staff-card { margin: 16px 0; padding: 18px; border-radius: var(--radius-lg); background: linear-gradient(135deg, #101828 0%, #342A68 100%); color: #FFFFFF; box-shadow: 0 16px 36px rgba(16,24,40,0.16); }
 
-#squad li {
-  padding: 6px 0;
-  border-bottom: 1px solid #eee;
-  font-size: 13px;
-}
+.staff-card span { display: block; color: rgba(255,255,255,0.72); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.squad-groups { display: grid; gap: 18px; margin-top: 18px; }
+.position-group { border: 1px solid rgba(124,92,252,0.14); border-radius: var(--radius-lg); background: linear-gradient(180deg, #FFFFFF 0%, #FCFCFD 100%); padding: 16px; box-shadow: var(--shadow-sm); }
+.position-group h3 { margin-bottom: 12px; font-size: 16px; color: var(--text); }
+.squad-card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+.squad-card { padding: 14px; border-radius: var(--radius-md); background: #FFFFFF; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.position-pill { display: inline-flex; margin-top: 8px; padding: 5px 8px; border-radius: 999px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; background: #F8F7FF; color: var(--accent); }
 
 /* Fixtures */
-.match {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-  cursor: pointer;
-  font-size: 13px;
-}
 
-.match:hover {
-  background: #f7f7f7;
-}
 
-/* Player Stats Cards */
+.fixtures-grid { display: grid; gap: 14px; margin-top: 16px; }
+.fixture-card { position: relative; overflow: hidden; display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; padding: 18px; border-radius: var(--radius-lg); background: linear-gradient(135deg, #FFFFFF 0%, #F8F7FF 100%); border: 1px solid rgba(124,92,252,0.16); box-shadow: 0 12px 30px rgba(16,24,40,0.08); }
+.fixture-date-badge { width: 72px; min-height: 72px; border-radius: 18px; display: grid; place-items: center; text-align: center; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #FFFFFF; box-shadow: 0 10px 22px rgba(124,92,252,0.24); font-weight: 800; }
+.fixture-date-badge span { display: block; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.82; }
+.fixture-date-badge strong { display: block; font-size: 24px; line-height: 1; }
+.fixture-opponent { font-size: 17px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
+.fixture-meta { margin-top: 4px; color: var(--muted); font-size: 12px; }
+.pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.football-pill { display: inline-flex; align-items: center; border-radius: 999px; padding: 5px 9px; font-size: 11px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; background: #F8F7FF; color: var(--accent); border: 1px solid rgba(124,92,252,0.18); }
+.football-pill.home { background: #ECFDF3; color: #027A48; border-color: rgba(18,183,106,0.24); }
+.football-pill.away { background: #EEF4FF; color: #3538CD; border-color: rgba(53,56,205,0.18); }
+.football-pill.tbc { background: #FFFAEB; color: #B54708; border-color: rgba(247,144,9,0.24); }
+.fixture-kickoff { text-align: right; min-width: 120px; color: var(--text); font-weight: 800; }
+.fixture-kickoff span { display: block; margin-top: 4px; color: var(--muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+/* Player Contributions Cards */
 #playerStats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 12px; }
-.player-card { padding: 16px; margin-bottom: 0; border: 1px solid var(--border); border-radius: var(--radius-md); font-size: 13px; background: #FFFFFF; box-shadow: var(--shadow-sm); transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+.player-card { position: relative; overflow: hidden; display: grid; gap: 10px; padding: 16px; margin-bottom: 0; border: 1px solid rgba(124,92,252,0.16); border-radius: var(--radius-md); font-size: 13px; background: linear-gradient(135deg, #FFFFFF 0%, #F8F7FF 100%); box-shadow: var(--shadow-sm); transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
+.player-card:hover { transform: translateY(-2px); border-color: rgba(124,92,252,0.32); box-shadow: 0 12px 28px rgba(16,24,40,0.10); }
+.player-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; background: linear-gradient(90deg, var(--accent), var(--accent-bright)); }
+.player-card strong { font-size: 16px; color: var(--text); letter-spacing: -0.02em; }
+.contribution-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.contribution-pill { padding: 9px 10px; border-radius: 12px; background: #FFFFFF; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.contribution-pill span { display: block; color: var(--muted); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.contribution-pill strong { display: block; margin-top: 3px; color: var(--text); font-size: 18px; }
 
 /* Heatmap Boxes */
 .heatmap-wrapper {
@@ -139,13 +160,7 @@ main {
 .heatmap-scale { width: 140px; height: 10px; border-radius: 999px; background: linear-gradient(90deg, rgba(124,92,252,0.32), rgba(124,92,252,1)); border: 1px solid rgba(124,92,252,0.18); }
 
 /* Table wrapper */
-.table-wrapper {
-  margin-top: 8px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  overflow: hidden;
-  background: #ffffff;
-}
+.table-wrapper { margin-top: 14px; border-radius: var(--radius-lg); border: 1px solid rgba(124,92,252,0.16); overflow: hidden; background: #FFFFFF; box-shadow: var(--shadow-md); }
 
 .table-scroll {
   width: 100%;
@@ -159,9 +174,9 @@ table {
   min-width: 400px;
 }
 
-thead { background: #F9FAFB; color: #475467; }
+thead { position: sticky; top: 0; z-index: 1; background: linear-gradient(135deg, #101828 0%, #342A68 100%); color: #FFFFFF; }
 
-th, td { padding: 12px 14px; text-align: left; border-bottom: 1px solid #EAECF0; white-space: nowrap; }
+th, td { padding: 14px 16px; text-align: left; border-bottom: 1px solid #EAECF0; white-space: nowrap; }
 
 th {
   font-weight: 600;
@@ -170,15 +185,16 @@ th {
   letter-spacing: 0.03em;
 }
 
-tbody tr:nth-child(even) {
-  background: #fafafa;
+tbody tr:nth-child(even) { background: #F8FAFC; }
 }
 
-tbody tr:hover {
-  background: #f0f0f0;
-}
+tbody tr:hover { background: #F8F7FF; }
+td:last-child, th:last-child { font-weight: 800; color: var(--accent); background: rgba(124,92,252,0.06); }
 
 /* Match Timeline */
+.timeline-toolbar { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin: 14px 0 4px; flex-wrap: wrap; }
+.timeline-toolbar label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.timeline-toolbar select { min-width: 210px; padding: 10px 36px 10px 12px; border-radius: 12px; border: 1px solid var(--border); background: #FFFFFF; color: var(--text); font-size: 13px; font-weight: 600; box-shadow: var(--shadow-sm); }
 .timeline-list { display: grid; gap: 16px; margin-top: 18px; }
 .timeline-card { position: relative; overflow: hidden; border-radius: var(--radius-lg); border: 1px solid rgba(124,92,252,0.16); background: linear-gradient(135deg, #FFFFFF 0%, #F8F7FF 100%); box-shadow: 0 14px 34px rgba(16,24,40,0.08); padding: 18px; cursor: pointer; transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease; }
 .timeline-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 6px; background: linear-gradient(180deg, var(--accent), var(--accent-bright)); }
@@ -192,6 +208,15 @@ tbody tr:hover {
 .timeline-fixture { margin-top: 4px; font-size: 17px; color: var(--text); font-weight: 800; letter-spacing: -0.02em; }
 .timeline-meta { color: var(--muted); font-size: 12px; margin-top: 3px; }
 .timeline-action { margin-top: 6px; display: inline-flex; align-items: center; gap: 6px; color: var(--accent); font-size: 12px; font-weight: 800; }
+.form-chip-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+.form-chip { width: 34px; height: 34px; border-radius: 12px; display: grid; place-items: center; color: #FFFFFF; font-weight: 900; box-shadow: var(--shadow-sm); }
+.form-chip.win { background: #12B76A; }
+.form-chip.draw { background: #F79009; }
+.form-chip.loss { background: #F04438; }
+.trend-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 10px; margin-top: 14px; }
+.trend-card { padding: 13px; border-radius: var(--radius-md); background: #FFFFFF; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.trend-card span { display: block; color: var(--muted); font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
+.trend-card strong { display: block; margin-top: 5px; color: var(--text); font-size: 18px; }
 .timeline-score { display: grid; place-items: center; min-width: 92px; padding: 12px 14px; border-radius: 18px; background: #FFFFFF; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
 .timeline-score strong { font-size: 26px; color: var(--text); line-height: 1; }
 .timeline-result { margin-top: 6px; padding: 4px 8px; border-radius: 999px; font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
@@ -233,6 +258,10 @@ tbody tr:hover {
 .summary-label { display: block; color: var(--muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
 .summary-value { display: block; margin-top: 6px; font-size: 28px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
 .summary-note { margin-top: 8px; color: var(--muted); font-size: 12px; }
+.progress-list { display: grid; gap: 12px; margin-top: 14px; }
+.progress-card { padding: 14px; border-radius: var(--radius-md); background: #FFFFFF; border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.progress-track { width: 100%; background: #EAECF0; height: 12px; border-radius: 999px; overflow: hidden; margin-top: 8px; }
+.progress-fill { height: 100%; border-radius: inherit; }
 .leaderboard-toolbar { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin: 14px 0 4px; flex-wrap: wrap; }
 .leaderboard-toolbar label { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
 .leaderboard-toolbar select { min-width: 210px; padding: 10px 36px 10px 12px; border-radius: 12px; border: 1px solid var(--border); background: #FFFFFF; color: var(--text); font-size: 13px; font-weight: 600; box-shadow: var(--shadow-sm); }
@@ -299,6 +328,8 @@ footer {
   .leaderboard-progress { grid-column: 1 / 3; }
   .timeline-detail-grid { grid-template-columns: 1fr; }
   .timeline-score { width: 100%; justify-items: start; }
+  .fixture-card { grid-template-columns: 1fr; }
+  .fixture-kickoff { text-align: left; }
   .footer-inner {
     flex-direction: column;
   }
@@ -326,7 +357,7 @@ footer {
         <button id="homeTabButton" class="tab active" role="tab" aria-controls="homeTab" data-tab="homeTab" aria-selected="true" tabindex="0">Home</button>
         <button id="squadTabButton" class="tab" role="tab" aria-controls="squadTab" data-tab="squadTab" aria-selected="false" tabindex="-1">Squad</button>
         <button id="fixturesTabButton" class="tab" role="tab" aria-controls="fixturesTab" data-tab="fixturesTab" aria-selected="false" tabindex="-1">Fixtures</button>
-        <button id="statsTabButton" class="tab" role="tab" aria-controls="statsTab" data-tab="statsTab" aria-selected="false" tabindex="-1">Player Stats</button>
+        <button id="statsTabButton" class="tab" role="tab" aria-controls="statsTab" data-tab="statsTab" aria-selected="false" tabindex="-1">Player Contributions</button>
         <button id="heatmapTabButton" class="tab" role="tab" aria-controls="heatmapTab" data-tab="heatmapTab" aria-selected="false" tabindex="-1">Appearance Heatmap</button>
         <button id="leaderboardTabButton" class="tab" role="tab" aria-controls="leaderboardTab" data-tab="leaderboardTab" aria-selected="false" tabindex="-1">Player Leaderboard</button>
         <button id="compareTabButton" class="tab" role="tab" aria-controls="compareTab" data-tab="compareTab" aria-selected="false" tabindex="-1">Compare Players</button>
@@ -347,6 +378,9 @@ footer {
             Your at-a-glance view of the next fixture, latest result, season progress and current form.
           </p>
 
+          <div id="matchdayHero" class="matchday-hero" aria-live="polite" aria-label="Matchday hero">Loading matchday spotlight…</div>
+          <div id="seasonSnapshot" class="snapshot-grid" aria-live="polite" aria-label="Season snapshot"></div>
+          <div id="teamLeaders" class="leaders-grid" aria-live="polite" aria-label="Team leaders"></div>
           <div id="nextMatchBox" class="info-box" aria-live="polite" aria-label="Next match summary">Loading next match…</div>
           <div id="lastMatchBox" class="info-box" aria-live="polite" aria-label="Last match summary">Loading last match…</div>
           <div id="seasonProgress" class="info-box" aria-live="polite" aria-label="Season progress by match type">Loading season progress…</div>
@@ -357,15 +391,12 @@ footer {
       <!-- SQUAD TAB -->
       <div id="squadTab" class="section" role="tabpanel" aria-labelledby="squadTabButton">
         <div class="section-card">
-          <h2>Squad List</h2>
-          <p class="section-subtitle">Registered players and positions, with the current management team.</p>
+          <h2>Squad</h2>
+          <p class="section-subtitle">A premium squad wall grouped by position, with the current management team and squad structure.</p>
 
-          <div style="margin-bottom:15px; padding:10px; border:1px solid #ddd; border-radius:8px; background:#fafafa;">
-            <strong>Manager:</strong> Steve Goddard<br>
-            <strong>Assistant Manager:</strong> Mark Elden
-          </div>
-
-          <ul id="squad"></ul>
+          <div id="squadSummary" class="squad-summary" aria-live="polite" aria-label="Squad summary"></div>
+          <div class="staff-card" role="group" aria-label="Management team: Manager Steve Goddard, Assistant Manager Mark Elden"><span>Management team</span><strong>Steve Goddard</strong><p>Manager</p><strong>Mark Elden</strong><p>Assistant Manager</p></div>
+          <div id="squad" class="squad-groups" aria-live="polite" aria-label="Squad grouped by position"></div>
         </div>
       </div>
 
@@ -373,17 +404,17 @@ footer {
       <div id="fixturesTab" class="section" role="tabpanel" aria-labelledby="fixturesTabButton">
         <div class="section-card">
           <h2>Fixtures</h2>
-          <p class="section-subtitle">Future matches, with date, opponent, venue and kick-off details.</p>
+          <p class="section-subtitle">Premium match cards for upcoming fixtures, including date, opponent, venue, match type and kick-off status.</p>
           <div id="fixtures" aria-live="polite" aria-label="Upcoming fixtures list"></div>
         </div>
       </div>
 
-      <!-- PLAYER STATS TAB -->
+      <!-- PLAYER CONTRIBUTIONS TAB -->
       <div id="statsTab" class="section" role="tabpanel" aria-labelledby="statsTabButton">
         <div class="section-card">
-          <h2>Player Stats</h2>
-          <p class="section-subtitle">Goals, assists, player-of-the-match awards and clean sheets for every player.</p>
-          <div id="playerStats" aria-live="polite" aria-label="Player statistics cards"></div>
+          <h2>Player Contributions</h2>
+          <p class="section-subtitle">Premium contribution cards showing appearances, goals, assists, player-of-the-match awards and clean sheets for every player.</p>
+          <div id="playerStats" aria-live="polite" aria-label="Player contribution cards"></div>
         </div>
       </div>
 
@@ -435,6 +466,7 @@ footer {
         <div class="section-card">
           <h2>Match Timeline</h2>
           <p class="section-subtitle">A premium match-by-match story of the season, with results, key contributors and player-of-the-match highlights.</p>
+          <div class="timeline-toolbar"><label for="timelineFilter">Filter by</label><select id="timelineFilter" aria-label="Filter match timeline" onchange="renderMatchTimeline()"><option value="all">All matches</option><option value="W">Wins</option><option value="D">Draws</option><option value="L">Losses</option><option value="Friendly">Friendlies</option><option value="League">League</option><option value="Cup">Cup</option></select></div>
           <div id="matchTimeline" aria-live="polite" aria-label="Interactive match timeline"></div>
         </div>
       </div>
@@ -444,6 +476,7 @@ footer {
         <div class="section-card">
           <h2>Player Appearance Breakdown</h2>
           <p class="section-subtitle">Friendlies, League and Cup appearances per player.</p>
+          <div class="leaderboard-toolbar"><label for="appearanceSort">Sort by</label><select id="appearanceSort" aria-label="Sort appearance breakdown" onchange="renderAppearanceBreakdown()"><option value="total-desc">Total: high to low</option><option value="total-asc">Total: low to high</option><option value="name-asc">Player name: A to Z</option><option value="name-desc">Player name: Z to A</option></select></div>
 
           <div class="table-wrapper">
             <div class="table-scroll">
@@ -527,7 +560,6 @@ const data = {
     { date: "2026-12-20", homeAway: "Home", opponent: "Sprowston F.C. U13 Hawks", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
     { date: "2027-01-10", homeAway: "Home", opponent: "Holt United F.C. U13", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
     { date: "2027-01-17", homeAway: "Away", opponent: "Heigham Park Rangers F.C. U13 Heroes", venue: "Recreation Road Sports Centre", kickoff: "TBC", type: "League" },
-    { date: "2027-01-24", homeAway: "Away", opponent: "Clenchwarton F.C. U13 Orange", venue: "Clenchwarton Recreation Ground", kickoff: "TBC", type: "League" },
     { date: "2027-01-31", homeAway: "Away", opponent: "Aylsham F.C. U13 Rhinos", venue: "Youngs Park", kickoff: "TBC", type: "League" },
     { date: "2027-02-07", homeAway: "Away", opponent: "Mulbarton Wanderers F.C. U13 Pumas", venue: "Orchard Park", kickoff: "TBC", type: "League" },
     { date: "2027-02-14", homeAway: "Home", opponent: "Stoke United F.C. U13 Blues", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
@@ -654,32 +686,36 @@ function setupTabs() {
 /* SQUAD */
 function renderSquad() {
   const squadEl = document.getElementById("squad");
+  const summaryEl = document.getElementById("squadSummary");
   squadEl.innerHTML = "";
-  data.squad.forEach(player => {
-    const li = document.createElement("li");
-    li.textContent = `${player.name} (${player.position})`;
-    squadEl.appendChild(li);
-  });
+  summaryEl.innerHTML = "";
+  const groups = { Goalkeepers: [], Defenders: [], Midfielders: [], Forwards: [], "Multi-position players": [] };
+  data.squad.forEach(player => { if (player.position === "Goalkeeper") groups.Goalkeepers.push(player); else if (player.position === "Defender") groups.Defenders.push(player); else if (player.position === "Midfielder") groups.Midfielders.push(player); else if (player.position === "Striker") groups.Forwards.push(player); else groups["Multi-position players"].push(player); });
+  summaryEl.innerHTML = `<div class="squad-summary-card" role="group" aria-label="Total squad players: ${data.squad.length}"><span>Squad size</span><strong>${data.squad.length}</strong></div><div class="squad-summary-card" role="group" aria-label="Goalkeepers: ${groups.Goalkeepers.length}"><span>Goalkeepers</span><strong>${groups.Goalkeepers.length}</strong></div><div class="squad-summary-card" role="group" aria-label="Defenders: ${groups.Defenders.length}"><span>Defenders</span><strong>${groups.Defenders.length}</strong></div><div class="squad-summary-card" role="group" aria-label="Midfielders and forwards: ${groups.Midfielders.length + groups.Forwards.length}"><span>Midfield/attack</span><strong>${groups.Midfielders.length + groups.Forwards.length}</strong></div>`;
+  Object.entries(groups).forEach(([groupName, players]) => { if (!players.length) return; const section = document.createElement("div"); section.className = "position-group"; section.setAttribute("role", "region"); section.setAttribute("aria-label", `${groupName}: ${players.length} player${players.length === 1 ? "" : "s"}`); section.innerHTML = `<h3>${groupName}</h3><div class="squad-card-grid">${players.map(player => `<div class="squad-card" role="group" aria-label="${player.name}, ${player.position}"><strong>${player.name}</strong><span class="position-pill">${player.position}</span></div>`).join("")}</div>`; squadEl.appendChild(section); });
 }
 
 /* FIXTURES */
 function renderFixtures() {
   const fixturesEl = document.getElementById("fixtures");
-  fixturesEl.innerHTML = "";
+  fixturesEl.innerHTML = "<div class='fixtures-grid'></div>";
+  const fixtureGrid = fixturesEl.querySelector(".fixtures-grid");
 
   data.fixtures.filter(match => new Date(`${match.date}T00:00:00`) >= new Date(new Date().setHours(0, 0, 0, 0)) && !data.matches.some(result => result.date === match.date && result.opponent === match.opponent)).forEach(match => {
     const matchDiv = document.createElement("div");
-    matchDiv.className = "match";
+    matchDiv.className = "fixture-card";
     matchDiv.setAttribute("aria-label", `${formatDateFull(match.date)}, ${match.homeAway} vs ${match.opponent}, ${match.type}, kick-off ${match.kickoff === "TBC" ? "time to be confirmed" : match.kickoff}, venue ${match.venue}`);
+    const matchDate = new Date(`${match.date}T00:00:00`);
+    const month = matchDate.toLocaleString("en-GB", { month: "short" });
+    const day = matchDate.getDate();
     matchDiv.innerHTML = `
-      <strong>${formatDateFull(match.date)}</strong> — <span>${match.type}</span><br>
-      ${match.homeAway} vs ${match.opponent}<br>
-      <small>${match.venue}</small><br>
-      <small><strong>Kick-off:</strong> ${match.kickoff === "TBC" ? "Time to be confirmed." : match.kickoff}</small>
+      <div class="fixture-date-badge" aria-hidden="true"><span>${month}</span><strong>${day}</strong></div>
+      <div><div class="fixture-opponent">${match.homeAway} vs ${match.opponent}</div><div class="fixture-meta">${formatDateFull(match.date)} • ${match.venue}</div><div class="pill-row"><span class="football-pill ${match.homeAway.toLowerCase()}">${match.homeAway}</span><span class="football-pill">${match.type}</span>${match.kickoff === "TBC" ? `<span class="football-pill tbc">Time TBC</span>` : ""}</div></div>
+      <div class="fixture-kickoff">${match.kickoff === "TBC" ? "Time to be confirmed" : match.kickoff}<span>Kick-off</span></div>
     `;
-    fixturesEl.appendChild(matchDiv);
+    fixtureGrid.appendChild(matchDiv);
   });
-  if (!fixturesEl.children.length) fixturesEl.innerHTML = "<p>No upcoming fixtures.</p>";
+  if (!fixtureGrid.children.length) fixturesEl.innerHTML = "<p>No upcoming fixtures yet. Fixtures will appear here once they are added to the season schedule.</p>";
 }
 
 /* NEXT MATCH */
@@ -695,7 +731,7 @@ function renderNextMatch() {
   const box = document.getElementById("nextMatchBox");
   const next = getNextMatch();
   if (!next) {
-    box.innerHTML = "<strong>No upcoming matches.</strong>";
+    box.innerHTML = "<strong>No upcoming matches yet.</strong><p>Fixtures will appear here once they are added to the season schedule.</p>";
     return;
   }
 
@@ -713,6 +749,7 @@ function renderNextMatch() {
     ${Math.max(0, diffDays)} days, ${Math.max(0, diffHours)} hours, ${Math.max(0, diffMinutes)} minutes</p>
   `;
 }
+function renderMatchdayHero() { const box = document.getElementById("matchdayHero"); const next = getNextMatch(); const last = getLastMatch(); if (!next) { box.innerHTML = "<h3>Matchday spotlight</h3><div class='matchday-fixture'>No upcoming fixture</div><p>New fixtures will appear here once added to the schedule.</p>"; return; } const kickoff = next.kickoff === "TBC" ? "Time to be confirmed" : next.kickoff; const lastResult = last ? `${last.result === "W" ? "Win" : last.result === "D" ? "Draw" : "Loss"} ${last.score.for}-${last.score.against}` : "No result yet"; box.innerHTML = `<h3>Matchday spotlight</h3><div class="matchday-fixture">${next.homeAway} vs ${next.opponent}</div><div class="pill-row"><span class="football-pill ${next.homeAway.toLowerCase()}">${next.homeAway}</span><span class="football-pill">${next.type}</span>${next.kickoff === "TBC" ? `<span class="football-pill tbc">Time TBC</span>` : ""}</div><p>${formatDateFull(next.date)} • ${kickoff}</p><p>${next.venue}</p><p><strong>Last result:</strong> ${lastResult}</p>`; }
 
 /* LAST MATCH */
 function getLastMatch() {
@@ -727,7 +764,7 @@ function renderLastMatch() {
   const box = document.getElementById("lastMatchBox");
   const last = getLastMatch();
   if (!last) {
-    box.innerHTML = "<strong>No matches played yet.</strong>";
+    box.innerHTML = "<strong>No matches played yet.</strong><p>Results, scorers and player-of-the-match details will appear here once the first match is recorded.</p>";
     return;
   }
 
@@ -763,31 +800,26 @@ function renderSeasonProgress() {
   const colors = { Friendly: "#2563EB", League: "#7C3AED", Cup: "#D97706" };
   const visibleProgress = progressByType.filter(item => item.total > 0 || item.played > 0);
 
-  bar.innerHTML = `<h3>Season Progress by Match Type</h3>${visibleProgress.map(item => `<div style="margin-top:12px;"><p><strong style="color:${colors[item.type]};">${item.type}</strong> — ${item.played} of ${item.total} played (${item.pct}%)</p><div style="width:100%; background:#E4E7EC; height:12px; border-radius:6px;"><div style="width:${item.pct}%; height:12px; background:${colors[item.type]}; border-radius:6px;"></div></div></div>`).join("")}`;
+  bar.innerHTML = `<h3>Season Progress</h3><div class="progress-list">${visibleProgress.map(item => `<div class="progress-card" role="group" aria-label="${item.type}: ${item.played} of ${item.total} played, ${item.pct} percent complete"><div style="display:flex; justify-content:space-between; gap:12px; align-items:center;"><strong style="color:${colors[item.type]};">${item.type}</strong><span>${item.played}/${item.total} played</span></div><div class="progress-track"><div class="progress-fill" style="width:${item.pct}%; background:${colors[item.type]};"></div></div></div>`).join("")}</div>`;
 }
 
-/* FORM GRAPH */
+/* FORM & TRENDS */
 function renderFormGraph() {
   const box = document.getElementById("formGraph");
-  if (data.matches.length === 0) {
-    box.innerHTML = "<strong>No form data yet.</strong>";
-    return;
-  }
-
-  const formIcons = data.matches.map(m =>
-    m.result === "W" ? "W" :
-    m.result === "D" ? "D" :
-    "L"
-  );
-
-  const formText = data.matches.map(m => m.result === "W" ? "Win" : m.result === "D" ? "Draw" : "Loss").join(", ");
-  box.innerHTML = `
-    <h3>Form Graph</h3>
-    <p aria-label="Recent form: ${formText}" style="font-size:24px;">${formIcons.join(" ")}</p>
-  `;
+  if (data.matches.length === 0) { box.innerHTML = "<strong>No form data yet.</strong><p>Recent results and trend insights will appear once matches are recorded.</p>"; return; }
+  const recent = [...data.matches].sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 3);
+  const formChips = recent.map(match => { const label = match.result === "W" ? "Win" : match.result === "D" ? "Draw" : "Loss"; const cls = match.result === "W" ? "win" : match.result === "D" ? "draw" : "loss"; return `<span class="form-chip ${cls}" aria-label="${label}">${match.result}</span>`; }).join("");
+  const formText = recent.map(match => match.result === "W" ? "Win" : match.result === "D" ? "Draw" : "Loss").join(", ");
+  const goalsForLastThree = recent.reduce((sum, match) => sum + match.score.for, 0);
+  const goalsAgainstLastThree = recent.reduce((sum, match) => sum + match.score.against, 0);
+  const latest = recent[0];
+  let streakCount = 0; for (const match of recent) { if (match.result === latest.result) streakCount++; else break; }
+  const latestLabel = latest.result === "W" ? "Win" : latest.result === "D" ? "Draw" : "Loss";
+  const streakLabel = `${streakCount} ${latestLabel.toLowerCase()}${streakCount === 1 ? "" : "s"} in a row`;
+  box.innerHTML = `<h3>Form & Trends</h3><p aria-label="Recent form: ${formText}">Last ${recent.length} matches</p><div class="form-chip-row" aria-hidden="true">${formChips}</div><div class="trend-grid"><div class="trend-card" role="group" aria-label="Latest result: ${latestLabel} ${latest.score.for}-${latest.score.against}"><span>Latest result</span><strong>${latestLabel} ${latest.score.for}-${latest.score.against}</strong></div><div class="trend-card" role="group" aria-label="Current streak: ${streakLabel}"><span>Current streak</span><strong>${streakLabel}</strong></div><div class="trend-card" role="group" aria-label="Goals scored in last ${recent.length}: ${goalsForLastThree}"><span>Goals for</span><strong>${goalsForLastThree}</strong></div><div class="trend-card" role="group" aria-label="Goals conceded in last ${recent.length}: ${goalsAgainstLastThree}"><span>Goals against</span><strong>${goalsAgainstLastThree}</strong></div></div>`;
 }
 
-/* PLAYER STATS */
+/* PLAYER CONTRIBUTIONS */
 function calculatePlayerStats() {
   const stats = {};
   data.squad.forEach(p => {
@@ -806,19 +838,19 @@ function calculatePlayerStats() {
 
 function renderPlayerStats() {
   const stats = calculatePlayerStats();
+  const appearances = calculateAppearances();
   const container = document.getElementById("playerStats");
   container.innerHTML = "";
 
   Object.keys(stats).forEach(player => {
     const div = document.createElement("div");
     div.className = "player-card";
-    div.setAttribute("aria-label", `${player}: ${stats[player].goals} goals, ${stats[player].assists} assists, ${stats[player].motm} player-of-the-match awards, ${stats[player].cleanSheets} clean sheets`);
+    div.setAttribute("aria-label", `${player}: ${appearances[player] || 0} appearances, ${stats[player].goals} goals, ${stats[player].assists} assists, ${stats[player].motm} player-of-the-match awards, ${stats[player].cleanSheets} clean sheets`);
     div.innerHTML = `
-      <strong>${player}</strong><br>
-      Goals: ${stats[player].goals}<br>
-      Assists: ${stats[player].assists}<br>
-      Player of the Match awards: ${stats[player].motm}<br>
-      Clean Sheets: ${stats[player].cleanSheets}
+      <strong>${player}</strong>
+      <div class="contribution-grid"><div class="contribution-pill"><span>Appearances</span><strong>${appearances[player] || 0}</strong></div><div class="contribution-pill"><span>Goals</span><strong>${stats[player].goals}</strong></div>
+      <div class="contribution-pill"><span>Assists</span><strong>${stats[player].assists}</strong></div><div class="contribution-pill"><span>POTM</span><strong>${stats[player].motm}</strong></div>
+      <div class="contribution-pill"><span>Clean sheets</span><strong>${stats[player].cleanSheets}</strong></div></div>
     `;
     container.appendChild(div);
   });
@@ -882,7 +914,7 @@ function renderLeaderboardPanel(metric, containerId, sortMode, stats) {
   container.querySelector(".leaderboard-insights").innerHTML = `<div class="leaderboard-insight"><span>Leader${leaderNames.length === 1 ? "" : "s"}</span><strong>${leaderNames.length ? leaderNames.join(", ") : "No data yet"}</strong></div><div class="leaderboard-insight"><span>Highest total</span><strong>${maxMetric} ${label}</strong></div><div class="leaderboard-insight"><span>Players listed</span><strong>${sorted.length}</strong></div>`;
   const list = container.querySelector(".leaderboard-list");
   sorted.forEach(([player, s]) => { const rank = rankLookup[player]; const row = document.createElement("div"); const value = s[metric]; const valueLabel = value === 1 ? metricNoun : `${metricNoun}s`; const percentage = maxMetric ? Math.round((value / maxMetric) * 100) : 0; row.className = `leaderboard-card ${isNameSort ? "neutral" : rank <= 3 ? `rank-${rank}` : ""}`; row.setAttribute("role", "listitem"); row.setAttribute("aria-label", `${player}, ${value} ${valueLabel}${isNameSort ? "" : `, rank ${rank}`}. This is ${percentage}% of the leading ${metricNoun} total.`); row.innerHTML = `<div class="leaderboard-rank" aria-label="${isNameSort ? "Player" : `Rank ${rank}`}">${isNameSort ? "—" : rank}</div><div class="leaderboard-player"><strong>${player}</strong><span>${isNameSort ? "Player profile" : rank === 1 ? (leaderNames.length > 1 ? `Joint top ${metric === "goals" ? "scorer" : "creator"}` : `Top ${metric === "goals" ? "scorer" : "creator"}`) : rank === 2 ? "Second place" : rank === 3 ? "Third place" : "Squad contribution"}</span></div><div class="leaderboard-goals">${value}<span>${valueLabel}</span></div><div class="leaderboard-progress" aria-hidden="true"><span style="width:${percentage}%"></span></div>`; list.appendChild(row); });
-  if (!sorted.length) container.innerHTML = `<p>No ${metricTitle.toLowerCase()} recorded yet.</p>`;
+  if (!sorted.length) container.innerHTML = `<p>No ${metricTitle.toLowerCase()} recorded yet. ${metricTitle} will appear once match events are added.</p>`;
 }
 
 /* PLAYER COMPARISON */
@@ -929,16 +961,18 @@ function renderComparison() {
 function renderMatchTimeline() {
   const container = document.getElementById("matchTimeline");
   container.innerHTML = "<div class='timeline-list'></div>";
+  const filter = document.getElementById("timelineFilter")?.value || "all";
+  const filteredMatches = data.matches.filter(match => filter === "all" || match.result === filter || match.type === filter).sort((a, b) => new Date(b.date) - new Date(a.date));
   const list = container.querySelector(".timeline-list");
 
-  if (data.matches.length === 0) {
-    container.innerHTML = "<p>No match events yet.</p>";
+  if (filteredMatches.length === 0) {
+    container.innerHTML = filter === "all" ? "<p>No match events yet. Completed matches will appear here once results are recorded.</p>" : `<p>No matches found for this filter. Try another timeline filter or choose All matches.</p>`;
     return;
   }
 
   const resultLabels = { W: "Win", D: "Draw", L: "Loss" };
   const resultClass = { W: "win", D: "draw", L: "loss" };
-  data.matches.forEach(match => {
+  filteredMatches.forEach(match => {
     const div = document.createElement("div");
     div.className = `timeline-card result-${match.result.toLowerCase()}`;
     div.setAttribute("tabindex", "0");
@@ -972,7 +1006,7 @@ function renderMatchTimeline() {
 function renderSeasonSummary() {
   const container = document.getElementById("seasonSummary");
   if (data.matches.length === 0) {
-    container.innerHTML = "<p>No matches played yet.</p>";
+    container.innerHTML = "<p>No season summary yet. Match totals, goals and assists will appear once results are recorded.</p>";
     return;
   }
 
@@ -997,13 +1031,16 @@ function renderSeasonSummary() {
     </div>
   `;
 }
+function renderSeasonSnapshot() { const container = document.getElementById("seasonSnapshot"); const wins = data.matches.filter(m => m.result === "W").length; const goalsFor = data.matches.reduce((sum, match) => sum + (match.score ? match.score.for : 0), 0); const goalsAgainst = data.matches.reduce((sum, match) => sum + (match.score ? match.score.against : 0), 0); const goalDifference = goalsFor - goalsAgainst; container.innerHTML = `<div class="snapshot-card" role="group" aria-label="Matches played: ${data.matches.length}"><span>Played</span><strong>${data.matches.length}</strong></div><div class="snapshot-card" role="group" aria-label="Wins: ${wins}"><span>Wins</span><strong>${wins}</strong></div><div class="snapshot-card" role="group" aria-label="Goals for: ${goalsFor}"><span>Goals for</span><strong>${goalsFor}</strong></div><div class="snapshot-card" role="group" aria-label="Goal difference: ${goalDifference > 0 ? "+" : ""}${goalDifference}"><span>Goal difference</span><strong>${goalDifference > 0 ? "+" : ""}${goalDifference}</strong></div>`; }
+function renderTeamLeaders() { const container = document.getElementById("teamLeaders"); const stats = calculatePlayerStats(); const apps = calculateAppearances(); const leadersFor = (entries, valueFn, singular, plural) => { const values = entries.map(entry => valueFn(entry)); const max = Math.max(0, ...values); const label = max === 1 ? singular : plural; return max > 0 ? `${entries.filter(entry => valueFn(entry) === max).map(entry => Array.isArray(entry) ? entry[0] : entry.name).join(", ")} — ${max} ${label}` : "No data yet"; }; const statEntries = Object.entries(stats); const scorer = leadersFor(statEntries, entry => entry[1].goals, "goal", "goals"); const assister = leadersFor(statEntries, entry => entry[1].assists, "assist", "assists"); const motm = leadersFor(statEntries, entry => entry[1].motm, "award", "awards"); const mostApps = leadersFor(Object.entries(apps), entry => entry[1], "appearance", "appearances"); container.innerHTML = `<div class="leader-card" role="group" aria-label="Top scorer: ${scorer}"><span>Top scorer</span><strong>${scorer}</strong></div><div class="leader-card" role="group" aria-label="Top assister: ${assister}"><span>Top assister</span><strong>${assister}</strong></div><div class="leader-card" role="group" aria-label="Most appearances: ${mostApps}"><span>Most appearances</span><strong>${mostApps}</strong></div><div class="leader-card" role="group" aria-label="Most player of the match awards: ${motm}"><span>Most POTM awards</span><strong>${motm}</strong></div>`; }
 
 /* APPEARANCE BREAKDOWN */
 function renderAppearanceBreakdown() {
   const tbody = document.querySelector("#appearanceMatrix tbody");
   tbody.innerHTML = "";
+  const sortMode = document.getElementById("appearanceSort")?.value || "total-desc";
 
-  data.squad.forEach(player => {
+  const rows = data.squad.map(player => {
     const name = player.name;
     let friendlies = 0;
     let league = 0;
@@ -1023,17 +1060,10 @@ function renderAppearanceBreakdown() {
 
     const total = friendlies + league + cup;
 
-    const row = document.createElement("tr");
-    row.setAttribute("aria-label", `${name}: ${friendlies} friendly appearances, ${league} league appearances, ${cup} cup appearances, ${total} total appearances`);
-    row.innerHTML = `
-      <td><strong>${name}</strong></td>
-      <td>${friendlies}</td>
-      <td>${league}</td>
-      <td>${cup}</td>
-      <td>${total}</td>
-    `;
-    tbody.appendChild(row);
+    return { name, friendlies, league, cup, total };
   });
+  rows.sort((a, b) => sortMode === "total-asc" ? a.total - b.total || a.name.localeCompare(b.name) : sortMode === "name-asc" ? a.name.localeCompare(b.name) : sortMode === "name-desc" ? b.name.localeCompare(a.name) : b.total - a.total || a.name.localeCompare(b.name));
+  rows.forEach(({ name, friendlies, league, cup, total }) => { const row = document.createElement("tr"); row.setAttribute("aria-label", `${name}: ${friendlies} friendly appearances, ${league} league appearances, ${cup} cup appearances, ${total} total appearances`); row.innerHTML = `<td><strong>${name}</strong></td><td>${friendlies}</td><td>${league}</td><td>${cup}</td><td>${total}</td>`; tbody.appendChild(row); });
 }
 
 
@@ -1043,6 +1073,9 @@ function init() {
   renderSquad();
   renderFixtures();
   renderNextMatch();
+  renderMatchdayHero();
+  renderSeasonSnapshot();
+  renderTeamLeaders();
   renderLastMatch();
   renderSeasonProgress();
   renderFormGraph();
