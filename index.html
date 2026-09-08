@@ -303,6 +303,18 @@ button { padding: 10px 16px; border-radius: 10px; border: 1px solid transparent;
 
 button:hover { background: #6941C6; transform: translateY(-1px); box-shadow: 0 6px 14px rgba(105,65,198,0.22); }
 
+/* League Centre */
+.league-centre-grid { display: grid; gap: 22px; margin-top: 16px; }
+.league-panel { padding: 18px; border-radius: var(--radius-lg); background: linear-gradient(180deg, #FFFFFF 0%, #FCFCFD 100%); border: 1px solid rgba(124,92,252,0.16); box-shadow: var(--shadow-md); }
+.league-table-scroll { overflow-x: auto; border-radius: var(--radius-md); border: 1px solid var(--border); margin-top: 12px; }
+.league-grid-table, .league-standings-table { width: 100%; border-collapse: collapse; min-width: 960px; }
+.league-grid-table th, .league-grid-table td, .league-standings-table th, .league-standings-table td { padding: 13px 14px; border-bottom: 1px solid #EAECF0; text-align: center; font-size: 12px; }
+.league-grid-table th, .league-standings-table th { background: #06254A; color: #FFFFFF; font-weight: 800; }
+.league-grid-table td:first-child, .league-standings-table td:nth-child(2) { text-align: left; font-weight: 800; }
+.league-self-cell { background: #06254A; color: #06254A; }
+.league-result-cell { font-weight: 900; color: var(--text); }
+.league-highlight-row, .league-highlight-cell { background: #F8F7FF; }
+.league-update-note { margin-top: 10px; color: var(--muted); font-size: 12px; }
 /* Footer */
 footer {
   border-top: 1px solid var(--border);
@@ -357,6 +369,7 @@ footer {
         <button id="homeTabButton" class="tab active" role="tab" aria-controls="homeTab" data-tab="homeTab" aria-selected="true" tabindex="0">Home</button>
         <button id="squadTabButton" class="tab" role="tab" aria-controls="squadTab" data-tab="squadTab" aria-selected="false" tabindex="-1">Squad</button>
         <button id="fixturesTabButton" class="tab" role="tab" aria-controls="fixturesTab" data-tab="fixturesTab" aria-selected="false" tabindex="-1">Fixtures</button>
+        <button id="leagueTabButton" class="tab" role="tab" aria-controls="leagueTab" data-tab="leagueTab" aria-selected="false" tabindex="-1">League Centre</button>
         <button id="statsTabButton" class="tab" role="tab" aria-controls="statsTab" data-tab="statsTab" aria-selected="false" tabindex="-1">Player Contributions</button>
         <button id="heatmapTabButton" class="tab" role="tab" aria-controls="heatmapTab" data-tab="heatmapTab" aria-selected="false" tabindex="-1">Appearance Heatmap</button>
         <button id="leaderboardTabButton" class="tab" role="tab" aria-controls="leaderboardTab" data-tab="leaderboardTab" aria-selected="false" tabindex="-1">Player Leaderboard</button>
@@ -408,6 +421,8 @@ footer {
           <div id="fixtures" aria-live="polite" aria-label="Upcoming fixtures list"></div>
         </div>
       </div>
+      <!-- LEAGUE CENTRE TAB -->
+      <div id="leagueTab" class="section" role="tabpanel" aria-labelledby="leagueTabButton"><div class="section-card"><h2>League Centre</h2><p class="section-subtitle">Full league fixture grid and current standings, updated from the weekly league screenshots.</p><div id="leagueCentre" aria-live="polite" aria-label="League fixtures grid and table"></div></div></div>
 
       <!-- PLAYER CONTRIBUTIONS TAB -->
       <div id="statsTab" class="section" role="tabpanel" aria-labelledby="statsTabButton">
@@ -546,26 +561,30 @@ const data = {
       type: "Friendly"
     },
     { date: "2026-09-06", homeAway: "Home", opponent: "Mulbarton Wanderers F.C. U13 Pumas", venue: "Harleston Sancroft Academy", kickoff: "10:00am", type: "League" },
-    { date: "2026-09-13", homeAway: "Home", opponent: "Morley Youth F.C. U13 Mustangs", venue: "Harleston Sancroft Academy", kickoff: "10:00am", type: "League" },
-    { date: "2026-09-20", homeAway: "Away", opponent: "Holt United F.C. U13", venue: "Holt Playing Fields", kickoff: "TBC", type: "League" },
-    { date: "2026-09-27", homeAway: "Away", opponent: "Cringleford F.C. U13 Lightning", venue: "Eaton Park", kickoff: "TBC", type: "League" },
-    { date: "2026-10-11", homeAway: "Home", opponent: "Heigham Park Rangers F.C. U13 Heroes", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
-    { date: "2026-10-18", homeAway: "Away", opponent: "Stoke United F.C. U13 Blues", venue: "Framingham Earl Sports Centre", kickoff: "TBC", type: "League" },
-    { date: "2026-10-25", homeAway: "Away", opponent: "Sprowston F.C. U13 Hawks", venue: "Sprowston Cricket Club", kickoff: "TBC", type: "League" },
-    { date: "2026-11-01", homeAway: "Away", opponent: "Old Catton Juniors F.C. U13 Cobras", venue: "Lavare Park", kickoff: "TBC", type: "League" },
-    { date: "2026-11-08", homeAway: "Home", opponent: "Cringleford F.C. U13 Lightning", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
-    { date: "2026-11-15", homeAway: "Home", opponent: "Aylsham F.C. U13 Rhinos", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
-    { date: "2026-12-06", homeAway: "Away", opponent: "North Walsham Town F.C. U13 Angels", venue: "Greens Road", kickoff: "TBC", type: "League" },
-    { date: "2026-12-13", homeAway: "Away", opponent: "Morley Youth F.C. U13 Mustangs", venue: "Shropham Playing Field", kickoff: "TBC", type: "League" },
-    { date: "2026-12-20", homeAway: "Home", opponent: "Sprowston F.C. U13 Hawks", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
-    { date: "2027-01-10", homeAway: "Home", opponent: "Holt United F.C. U13", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
-    { date: "2027-01-17", homeAway: "Away", opponent: "Heigham Park Rangers F.C. U13 Heroes", venue: "Recreation Road Sports Centre", kickoff: "TBC", type: "League" },
-    { date: "2027-01-31", homeAway: "Away", opponent: "Aylsham F.C. U13 Rhinos", venue: "Youngs Park", kickoff: "TBC", type: "League" },
-    { date: "2027-02-07", homeAway: "Away", opponent: "Mulbarton Wanderers F.C. U13 Pumas", venue: "Orchard Park", kickoff: "TBC", type: "League" },
-    { date: "2027-02-14", homeAway: "Home", opponent: "Stoke United F.C. U13 Blues", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
-    { date: "2027-02-21", homeAway: "Home", opponent: "North Walsham Town F.C. U13 Angels", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" },
-    { date: "2027-02-28", homeAway: "Home", opponent: "Clenchwarton F.C. U13 Orange", venue: "Harleston Sancroft Academy", kickoff: "TBC", type: "League" }
+    { date: "2026-09-13", homeAway: "Home", opponent: "Morley Youth F.C. U13 Mustangs", venue: "Harleston Sancroft Academy (Secondary) #3", kickoff: "10:00am", type: "League" },
+    { date: "2026-09-20", homeAway: "Away", opponent: "Holt United F.C. U13", venue: "Holt Playing Fields #4", kickoff: "10:00am", type: "League" },
+    { date: "2026-09-27", homeAway: "Away", opponent: "Cringleford F.C. U13 Lightning", venue: "Eaton Park #1", kickoff: "11:00am", type: "League" },
+    { date: "2026-10-11", homeAway: "Home", opponent: "Heigham Park Rangers F.C. U13 Heroes", venue: "Harleston Sancroft Academy (Secondary) #2", kickoff: "TBC", type: "League" },
+    { date: "2026-10-18", homeAway: "Away", opponent: "Stoke United F.C. U13 Blues", venue: "Framingham Earl Sports Centre #3", kickoff: "11:30am", type: "League" },
+    { date: "2026-10-25", homeAway: "Away", opponent: "Sprowston F.C. U13 Hawks", venue: "Sprowston Community Academy #7", kickoff: "10:00am", type: "League" },
+    { date: "2026-11-01", homeAway: "Away", opponent: "Old Catton Juniors F.C. U13 Cobras", venue: "Lavare Park #12", kickoff: "TBC", type: "Cup" },
+    { date: "2026-11-08", homeAway: "Home", opponent: "Cringleford F.C. U13 Lightning", venue: "Harleston Sancroft Academy (Secondary) #3", kickoff: "TBC", type: "League" },
+    { date: "2026-11-15", homeAway: "Home", opponent: "Aylsham F.C. (Ltd) U13 Rhinos", venue: "Harleston Sancroft Academy (Secondary) #1", kickoff: "TBC", type: "League" },
+    { date: "2026-12-06", homeAway: "Away", opponent: "North Walsham Town F.C. U13 Angels", venue: "Greens Road #3", kickoff: "TBC", type: "League" },
+    { date: "2026-12-13", homeAway: "Away", opponent: "Morley Youth F.C. U13 Mustangs", venue: "Shropham Playing Field #2", kickoff: "TBC", type: "League" },
+    { date: "2026-12-20", homeAway: "Home", opponent: "Sprowston F.C. U13 Hawks", venue: "Harleston Sancroft Academy (Secondary) #1", kickoff: "TBC", type: "League" },
+    { date: "2027-01-10", homeAway: "Home", opponent: "Holt United F.C. U13", venue: "Harleston Sancroft Academy (Secondary) #1", kickoff: "TBC", type: "League" },
+    { date: "2027-01-17", homeAway: "Away", opponent: "Heigham Park Rangers F.C. U13 Heroes", venue: "Recreation Road Sports Centre #8", kickoff: "TBC", type: "League" },
+    { date: "2027-01-24", homeAway: "Away", opponent: "Clenchwarton F.C. U13 Orange", venue: "Clenchwarton Recreation Ground", kickoff: "TBC", type: "League" },
+    { date: "2027-01-31", homeAway: "Away", opponent: "Aylsham F.C. (Ltd) U13 Rhinos", venue: "Youngs Park #9", kickoff: "10:00am", type: "League" },
+    { date: "2027-02-07", homeAway: "Away", opponent: "Mulbarton Wanderers F.C. U13 Pumas", venue: "Orchard Park #4", kickoff: "11:15am", type: "League" },
+    { date: "2027-02-14", homeAway: "Home", opponent: "Stoke United F.C. U13 Blues", venue: "Harleston Sancroft Academy (Secondary) #4", kickoff: "TBC", type: "League" },
+    { date: "2027-02-21", homeAway: "Home", opponent: "North Walsham Town F.C. U13 Angels", venue: "Harleston Sancroft Academy (Secondary) #2", kickoff: "TBC", type: "League" },
+    { date: "2027-02-28", homeAway: "Home", opponent: "Clenchwarton F.C. U13 Orange", venue: "Harleston Sancroft Academy (Secondary) #4", kickoff: "TBC", type: "League" }
   ],
+  league: { teams: ["Aylsham F.C. (Ltd) U13 Rhinos", "Clenchwarton F.C. U13 Orange", "Cringleford F.C. U13 Lightning", "Harleston Youth F.C. U13 Hurricanes", "Heigham Park Rangers F.C. U13 Heroes", "Holt United F.C. U13", "Morley Youth F.C. U13 Mustangs", "Mulbarton Wanderers F.C. U13 Pumas", "North Walsham Town F.C. U13 Angels", "Sprowston F.C. U13 Hawks", "Stoke United F.C. U13 Blues"],
+  grid: [["", "4-1", "20/09", "31/01", "25/10", "21/02", "22/11", "06/12", "11/10", "10/01", "27/09"], ["18/10", "", "04/10", "24/01", "20/09", "15/11", "21/02", "22/11", "17/01", "06/12", "13/12"], ["17/01", "20/12", "", "27/09", "10/01", "22/11", "24/01", "13/09", "25/10", "13/12", "11/10"], ["15/11", "28/02", "08/11", "", "11/10", "10/01", "13/09", "8-2", "21/02", "20/12", "14/02"], ["13/09", "31/01", "07/02", "17/01", "", "08/11", "14/02", "20/12", "22/11", "21/02", "06/12"], ["20/12", "07/02", "14/02", "20/09", "28/02", "", "11/10", "13/12", "04/10", "13/09", "17/01"], ["07/02", "10/01", "18/10", "13/12", "15/11", "06/12", "", "07/03", "31/01", "08/11", "20/12"], ["28/02", "25/10", "15/11", "07/02", "24/01", "31/01", "04/10", "", "14/02", "17/01", "20/09"], ["13/12", "27/09", "28/02", "06/12", "18/10", "24/01", "2-3", "08/11", "", "20/09", "13/09"], ["04/10", "14/02", "2-6", "25/10", "27/09", "18/10", "28/02", "11/10", "15/11", "", "22/11"], ["24/01", "08/11", "21/02", "18/10", "04/10", "2-0", "25/10", "10/01", "07/02", "31/01", ""]],
+  table: [{ pos: 1, team: "Harleston Youth F.C. U13 Hurricanes", p: 1, w: 1, d: 0, l: 0, pts: 3 }, { pos: 2, team: "Cringleford F.C. U13 Lightning", p: 1, w: 1, d: 0, l: 0, pts: 3 }, { pos: 3, team: "Aylsham F.C. (Ltd) U13 Rhinos", p: 1, w: 1, d: 0, l: 0, pts: 3 }, { pos: 4, team: "Stoke United F.C. U13 Blues", p: 1, w: 1, d: 0, l: 0, pts: 3 }, { pos: 5, team: "Morley Youth F.C. U13 Mustangs", p: 1, w: 1, d: 0, l: 0, pts: 3 }, { pos: 6, team: "Heigham Park Rangers F.C. U13 Heroes", p: 0, w: 0, d: 0, l: 0, pts: 0 }, { pos: 7, team: "North Walsham Town F.C. U13 Angels", p: 1, w: 0, d: 0, l: 1, pts: 0 }, { pos: 8, team: "Holt United F.C. U13", p: 1, w: 0, d: 0, l: 1, pts: 0 }, { pos: 9, team: "Clenchwarton F.C. U13 Orange", p: 1, w: 0, d: 0, l: 1, pts: 0 }, { pos: 10, team: "Sprowston F.C. U13 Hawks", p: 1, w: 0, d: 0, l: 1, pts: 0 }, { pos: 11, team: "Mulbarton Wanderers F.C. U13 Pumas", p: 1, w: 0, d: 0, l: 1, pts: 0 }], updated: "Latest league screenshots" },
 
 matches: [
   {
@@ -717,6 +736,7 @@ function renderFixtures() {
   });
   if (!fixtureGrid.children.length) fixturesEl.innerHTML = "<p>No upcoming fixtures yet. Fixtures will appear here once they are added to the season schedule.</p>";
 }
+function renderLeagueCentre() { const container = document.getElementById("leagueCentre"); if (!container || !data.league) return; const teams = data.league.teams; const highlight = "Harleston Youth F.C. U13 Hurricanes"; const header = teams.map(team => `<th>${team}</th>`).join(""); const gridRows = teams.map((team, rowIndex) => `<tr class="${team === highlight ? "league-highlight-row" : ""}"><td>${team}</td>${teams.map((opponent, colIndex) => { const value = data.league.grid[rowIndex][colIndex]; const isSelf = rowIndex === colIndex; const isResult = /\d+\s*-\s*\d+/.test(value); const classes = `${isSelf ? "league-self-cell" : ""} ${isResult ? "league-result-cell" : ""} ${opponent === highlight ? "league-highlight-cell" : ""}`.trim(); return `<td class="${classes}" aria-label="${isSelf ? `${team} self cell` : `${team} vs ${opponent}: ${value || "Not scheduled"}`}">${isSelf ? "" : value}</td>`; }).join("")}</tr>`).join(""); const tableRows = data.league.table.map(row => `<tr class="${row.team === highlight ? "league-highlight-row" : ""}"><td>${row.pos}</td><td>${row.team}</td><td>${row.p}</td><td>${row.w}</td><td>${row.d}</td><td>${row.l}</td><td><strong>${row.pts}</strong></td></tr>`).join(""); container.innerHTML = `<div class="league-centre-grid"><div class="league-panel" role="region" aria-label="League fixtures grid"><h3>League fixtures grid</h3><p class="section-subtitle">Dates show scheduled fixtures. Bold scores show completed league results.</p><div class="league-table-scroll"><table class="league-grid-table" aria-label="League fixtures and results matrix"><thead><tr><th>Home team</th>${header}</tr></thead><tbody>${gridRows}</tbody></table></div><p class="league-update-note">Updated from: ${data.league.updated}.</p></div><div class="league-panel" role="region" aria-label="League table standings"><h3>League table</h3><p class="section-subtitle">Current standings from the latest league screenshot.</p><div class="league-table-scroll"><table class="league-standings-table" aria-label="Current league standings"><thead><tr><th>Pos</th><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>Pts</th></tr></thead><tbody>${tableRows}</tbody></table></div></div></div>`; }
 
 /* NEXT MATCH */
 function getNextMatch() {
@@ -1072,6 +1092,7 @@ function init() {
   setupTabs();
   renderSquad();
   renderFixtures();
+  renderLeagueCentre();
   renderNextMatch();
   renderMatchdayHero();
   renderSeasonSnapshot();
